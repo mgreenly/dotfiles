@@ -31,7 +31,7 @@ Then list all available actions.
 rake -T
 ```
 
-If it's the first run on a fresh install start by copying the dotfiles.
+If this is the first time you're running this on a fresh install start by copying the dot files.
 
 ```
 rake home:dotfiles
@@ -41,7 +41,7 @@ rake home:dotfiles
 
 The Rakefile includes a number of tasks for installing other software from
 source.  In most cases the source files are downloaded into the $HOME/tmp
-directory and then extracted.  If the build system for the source packages 
+directory and then extracted.  If the build system for the source packages
 honors a --prefix setting it's installed into $HOME/.opt/packagename.  This
 means that in most cases you have to add $HOME/.opt/packagename/bin to the
 path in your $HOME/.bashrc.
@@ -52,11 +52,11 @@ package if necessary.
 In some cases, if it's a single file script for example, it may install into
 $HOME/.local/bin instead.
 
-
 ## Languages
 
 One of my primary goals was to make it easy to install programming languages.
-Tasks exist to install these languages.
+Tasks exist to install these languages, but beware some of the install scripts
+may be outdated.
 
   * Clojure
   * Coffeescript
