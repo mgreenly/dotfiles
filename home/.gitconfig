@@ -1,0 +1,15 @@
+[user]
+	name = Michael Greenly
+	email = mgreenly@gmail.com
+[core]
+	editor = vim
+	excludesfile = /home/mgreenly/.gitignore
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[credential]
+	helper = cache
+[commit]
+	template = /home/mgreenly/.git_commit_msg.txt
