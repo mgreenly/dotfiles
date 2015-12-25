@@ -1,0 +1,195 @@
+#!/bin/bash
+
+#
+#  This script prepares a fresh linux installation for use with the
+#  rakefile included in the dotfiles repository.
+#
+#  Copy and paste the following to execute this script
+#
+#     wget -O - -o /dev/null http://goo.gl/k5dx1 | sudo bash -s
+#
+
+# exit on any error
+set -e
+
+#
+# make sure the script is being run as root
+#
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+#
+# make sure we're on linux
+#
+if ! [[ $(uname -s) = "Linux" ]]; then
+  echo "This script is intended to be executed on systems running Linux."
+  exit 1
+fi
+
+#
+# determine the distro 
+#
+if [ -f /etc/os-release ]; then
+  distro=$(grep ^ID= /etc/os-release | cut -f 2 -d '=')
+else
+  distro="UNKNOWN"
+fi
+
+case $distro in
+  debian)
+    ;;
+  ubuntu)
+    ;;
+  *)
+    echo "This script is intended to be executed on Debian based distributions."
+    exit 1
+esac
+
+
+#
+# make sure the requried arguments were supplied
+#
+if [ $# -ne 0 ]; then
+  echo "Aborting, arguments were supplied where none were expected"
+  exit 1
+fi
+
+#
+# let apt know we're working non-interactively
+#
+export DEBIAN_FRONTEND=noninteractive
+
+#
+# Bring the system up to date.
+#
+apt-get -q -y update
+#apt-get -q -y dist-upgrade
+
+#
+# install distribution packages
+#
+apt-get -q -y install            \
+  apt-transport-https            \
+  ncurses-term                   \
+  vim                            \
+  curl                           \
+  htop                           \
+  realpath                       \
+  tmux                           \
+  git-core                       \
+  mercurial                      \
+  ruby                           \
+  ruby-dev                       \
+  rake                           \
+  build-essential                \
+  automake                       \
+  libtool                        \
+  bison                          \
+  libc6-dev                      \
+  libreadline6                   \
+  libreadline6-dev               \
+  libncurses5-dev                \
+  zlib1g                         \
+  zlib1g-dev                     \
+  libbz2-1.0                     \
+  libbz2-dev                     \
+  libssl-dev                     \
+  libyaml-dev                    \
+  libxml2-dev                    \
+  libxml2-utils                  \
+  libxslt1-dev                   \
+  libqt4-dev                     \
+  libqtgui4                      \
+  postgresql                     \
+  postgresql-client              \
+  postgresql-contrib             \
+  libpq-dev                      \
+  imagemagick                    \
+  s3cmd                          \
+  libsqlite3-dev                 \
+  sqlite3                        \
+  libgdbm-dev                    \
+  libffi-dev                     \
+  graphviz                       \
+  libav-tools                    \
+  scala                          \
+  yasm                           \
+  smbclient                      \
+  winbind                        \
+  cifs-utils                     \
+  checkinstall                   \
+  xdg-utils                      \
+  llvm                           \
+  xsltproc                       \
+  fop                            \
+  wmctrl                         \
+  freetds-dev                    \
+  freetds-bin                    \
+  unixodbc-bin                   \
+  tdsodbc                        \
+  nfs-common                     \
+  rlwrap                         \
+  libcurl3                       \
+  ntp                            \
+  linux-headers-$(uname -r)
+
+
+#
+# install desktop dependent packages if the desktop-base is installed.
+#
+if (dpkg-query -W -f='${Status} ${Version}\n' desktop-base | grep 'install ok' >> /dev/null ); then
+  apt-get -q -y install         \
+    numlockx                    \
+    libappindicator1            \
+    python-gpgme                \
+    gnome-tweak-tool            \
+    keepass2                    \
+    blender                     \
+    audacity                    \
+    gimp                        \
+    gtk-recordmydesktop         \
+    chromium
+fi
+
+
+#
+# create $HOME/Projects if it doesn't exist
+#
+if [[ ! -d "/home/$SUDO_USER/Projects" ]]; then
+  su -c "mkdir -p '/home/$SUDO_USER/Projects'" $SUDO_USER
+fi
+
+#
+# clone dotfiles project if it doesn't exist
+if [[ ! -d "/home/$SUDO_USER/Projects/dotfiles" ]]; then
+  su -c "cd /home/$SUDO_USER/Projects && git clone git@github.com:mgreenly/dotfiles.git" $SUDO_USER
+fi
+
+#
+# add $SUDO_USER as database super user
+#
+if !(su -c "cd /tmp && psql -c 'select usename from pg_user'" postgres | grep "$SUDO_USER" >> /dev/null); then
+  su -c "cd /tmp && createuser --superuser $SUDO_USER" postgres
+fi
+
+#
+# remove any unused packages
+#
+apt-get -q -y autoremove
+apt-get -q -y update
+
+#
+# Success
+#
+echo "System updated and configured successfully."
+
+#
+# Check if reboot is required?
+#
+if [[ -f /var/run/reboot-required ]]; then
+  echo
+  echo "Reboot required!"
+  echo
+fi
