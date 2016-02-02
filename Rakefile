@@ -231,7 +231,7 @@ namespace :golang do
 
   desc "install golang"
   task :install do
-    version, os, arch = "1.5", "linux", "amd64"
+    version, os, arch = "1.5.3", "linux", "amd64"
     dirname = "go#{version}.#{os}-#{arch}"
     tarfile = [dirname, "tar.gz"].join(".")
     tarpath = File.join(TMPDIR, tarfile)
