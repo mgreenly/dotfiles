@@ -15,9 +15,6 @@ let g:colors_name = "mag256"
 set cursorcolumn          " highlight the cursors column
 set cursorline            " highlight the cursors row
 
-set number                " show linenumber
-set numberwidth=4         " set the number width
-
 "" The current cursor's column
 highlight CursorColumn   ctermfg=none  ctermbg=235   cterm=none
 "" The current cursor's line.  
@@ -27,16 +24,17 @@ highlight CursorLineNr   ctermfg=239  ctermbg=235   cterm=none
 "" The number row
 highlight LineNr         ctermfg=239  ctermbg=none   cterm=none
 
-"" The status line 
-""hi StatusLine            ctermfg=249  ctermbg=232 cterm=none
-""hi StatusLineNC          ctermfg=249  ctermbg=249 cterm=none
-
-
-""highlight Normal         ctermfg=067 ctermbg=none cterm=none
-
 highlight hsLineComment  ctermfg=241 ctermbg=none cterm=none  
 highlight hsBlockComment ctermfg=241 ctermbg=none cterm=none
 
+
+
+
+
+"
+""hi StatusLine            ctermfg=249  ctermbg=232 cterm=none
+""hi StatusLineNC          ctermfg=249  ctermbg=249 cterm=none
+""highlight Normal         ctermfg=067 ctermbg=none cterm=none
 ""hsModule
 ""hsModuleName
 ""hsModuleStart

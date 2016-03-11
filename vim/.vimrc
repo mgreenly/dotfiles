@@ -1,6 +1,9 @@
 set nocompatible          " behave like vim not vi 
 
+set t_Co=256              " force 256 color mode
 colorscheme mag256
+
+let mapleader=","
 
 set encoding=utf8         " show utf8 encoding
 set fileencoding=utf8     " save files with utf8 encoding
@@ -11,31 +14,18 @@ set nowrap                " don't wrap long lines
 set hidden                " don't force save before opening buffer
 set exrc                  " enable per-directory .vimrc files
 set laststatus=2          " show status line
-
-set cursorcolumn          " highlight the cursors column
-set cursorline            " highlight the cursors row
 set nomodeline            " don't want editor specific commands in files
-"" set number                " show linenumber
+set number                " show linenumber
+set numberwidth=4         " set the number width
 
 syntax on
 filetype on
 filetype indent on
 filetype plugin on
 
-set t_Co=256              " force 256 color mode
-set bg=dark               " dark background
-
-"" highlight trailing whitespace
-autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
-autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
-highlight EOLWS ctermbg=red guibg=red
-
-"" delete trailing whitespace on save
-autocmd BufWritePre *.rb :%s/\s\+$//e
-autocmd BufWritePre *.scm :%s/\s\+$//e
-
-"" paredit config
-let g:paredit_electric_return = 0
+"""" delete trailing whitespace on save
+""autocmd BufWritePre *.rb :%s/\s\+$//e
+""autocmd BufWritePre *.scm :%s/\s\+$//e
 
 "" slime config
 let g:slime_target = "tmux"

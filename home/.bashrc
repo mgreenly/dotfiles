@@ -205,3 +205,5 @@ export LD_LIBRARY_PATH
 export CPATH 
 
 . /etc/profile.d/vte.sh
+
+alias runghc="stack --resolver=lts-5.4 --verbosity=0 runghc"
