@@ -2,6 +2,7 @@ require 'etc'
 require 'fileutils'
 require 'pathname'
 
+
 TMPDIR = File.join(Dir.home,"tmp")
 
 USER_BIN = File.join(Dir.home, "bin")
@@ -526,7 +527,7 @@ namespace :vim do
   desc "install all vim components"
   task :all => [:base, :coffee, :slime, :rainbow, :clojure, :go, :nerdtree, :ruby, :scala]
 
-  desc "base, ruby, slime, paredit, rainbow"
+  desc "base, coffee pgsql"
   task :favs => ['vim:base', 'vim:coffee', 'vim:pgsql' ]
 
   desc "remove vim config"
@@ -542,8 +543,10 @@ namespace :vim do
     # hardlink the files from the dotfiles project folder to there installed locations.  Helps to ensure if I mistakenly
     # make changes in the actual file they're reflected in the project folder.
     #
-    sh "rsync -av --link-dest /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/.vimrc"
     sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/vim/.vim/ /home/mgreenly/Projects/dotfiles/vim/.vim/ /home/mgreenly/.vim"
+    sh "link /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/.vimrc"
+
+    #sh "rsync -av --link-dest /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/.vimrc"
   end
 
   desc "install paredit"
