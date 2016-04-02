@@ -206,4 +206,8 @@ export CPATH
 
 . /etc/profile.d/vte.sh
 
-alias runghc="stack --resolver=lts-5.4 --verbosity=0 runghc"
+# alias runghc="stack --resolver=lts-5.4 --verbosity=0 runghc"
+
+if [ -d "/home/mgreenly/.stack/programs/x86_64-linux/ghc-7.10.3/bin" ]; then
+  PATH="$HOME/.stack/programs/x86_64-linux/ghc-7.10.3/bin:$PATH"
+fi
