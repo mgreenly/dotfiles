@@ -11,6 +11,10 @@ set tabstop=4                   " display existing tabs as 4 columns wide
 set softtabstop=4               " insert 4 spaces when tab is pressed
 set shiftwidth=4                " indents, automatic or manual, are 4 spaces
 
+"" setup hdevtools
+au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
+au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
+
 
 "" color scheme
 "" 
@@ -30,9 +34,6 @@ let g:colors_name = "mgHaskell"
 
 set cursorcolumn          " highlight the cursors column
 set cursorline            " highlight the cursors row
-
-set number                " show linenumber
-set numberwidth=4         " set the number width
 
 "" The current cursor's column
 highlight CursorColumn   ctermfg=none  ctermbg=235   cterm=none

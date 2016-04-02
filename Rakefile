@@ -64,6 +64,8 @@ namespace :home do
   task :dotfiles do
     files = Dir.glob("home/*", File::FNM_DOTMATCH) - ['home/.', 'home/..']
     files.each do |file|
+      next if File.directory?(file)
+      next if File.basename(file) == '.vimrc'
       next if File.extname(file) == ".swp"
       src = File.join(Dir.pwd, file)
       dst = File.join(Dir.home, file.split('/')[1..-1].join('/'))
@@ -519,16 +521,12 @@ namespace :chicken do
 end
 
 
-#
-# vim
-#
+
+
+##
+## vim
+##
 namespace :vim do
-
-  desc "install all vim components"
-  task :all => [:base, :coffee, :slime, :rainbow, :clojure, :go, :nerdtree, :ruby, :scala]
-
-  desc "base, coffee pgsql"
-  task :favs => ['vim:base', 'vim:coffee', 'vim:pgsql' ]
 
   desc "remove vim config"
   task :clean do
@@ -537,208 +535,87 @@ namespace :vim do
     sh "rm -rf tmp/"
   end
 
+  desc "install base"
+  task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:ruby', 'vim:coffee', 'vim:pgsql', 'vim:haskell' ]
+ 
   desc "install vim configuration files"
-  task :base => :tmpdir do
+  task :base do
     #
     # hardlink the files from the dotfiles project folder to there installed locations.  Helps to ensure if I mistakenly
     # make changes in the actual file they're reflected in the project folder.
     #
-    sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/vim/.vim/ /home/mgreenly/Projects/dotfiles/vim/.vim/ /home/mgreenly/.vim"
-    sh "link /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/.vimrc"
-
-    #sh "rsync -av --link-dest /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/Projects/dotfiles/vim/.vimrc /home/mgreenly/.vimrc"
+    sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/home/.vim/ /home/mgreenly/Projects/dotfiles/home/.vim/ /home/mgreenly/.vim"
+    sh "link /home/mgreenly/Projects/dotfiles/home/.vimrc /home/mgreenly/.vimrc"
   end
 
-  desc "install paredit"
-  task :paredit => [] do
-    unless File.exists?("tmp/paredit")
-      sh "cd tmp && hg clone https://bitbucket.org/kovisoft/paredit"
-    end
-    sh "cd tmp/paredit && hg checkout 0.9.12"
-    sh "rsync -avz --exclude='README.*' tmp/paredit/* $HOME/.vim/"
+
+  desc "install vim-pathogen"
+  task :pathogen do
+    sh "mkdir -p ~/.vim/autoload"
+    sh "mkdir -p ~/.vim/bundle"
+    sh "curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
   end
 
-  desc "install rainbow-parentheses"
-  task :rainbow => 'vim:base' do
-    if File.exists?('tmp/rainbow_parentheses')
-      sh "cd tmp/rainbow_parentheses && git pull origin master"
-    else
-      sh "git clone git@github.com:kien/rainbow_parentheses.vim.git tmp/rainbow_parentheses"
-    end
-    sh "cp -R tmp/rainbow_parentheses/autoload/* $HOME/.vim/autoload/"
-    sh "cp -R tmp/rainbow_parentheses/plugin/* $HOME/.vim/plugin/"
+  desc "install vim-sensible"
+  task :sensible do
+    sh "cd $HOME/.vim/bundle && git clone git://github.com/tpope/vim-sensible.git"
   end
 
-  desc "install vim-treetop"
-  task :treetop => 'vim:base' do
-    if File.exists?('tmp/vim-treetop')
-      sh "cd tmp/vim-treetop && git pull origin master"
-    else
-      sh " git clone git://github.com/nanki/treetop.vim.git tmp/vim-treetop"
-    end
-    sh "cp -R tmp/vim-treetop/ftdetect/* $HOME/.vim/ftdetect/"
-    sh "cp -R tmp/vim-treetop/snippets/* $HOME/.vim/snippets/"
-    sh "cp -R tmp/vim-treetop/syntax/* $HOME/.vim/syntax/"
+  desc "install vim-sensible"
+  task :syntastic do
+    sh "cd $HOME/.vim/bundle && git clone https://github.com/scrooloose/syntastic.git"
   end
 
-  desc "install pgsql.vim"
-  task :pgsql => 'vim:base' do
-    if File.exists?('tmp/pgsql.vim')
-      sh "cd tmp/pgsql.vim && git pull origin master"
-    else
-      sh "git clone git@github.com:exu/pgsql.vim.git tmp/pgsql.vim"
-    end
-    sh "rsync -a --exclude 'README.md' tmp/pgsql.vim/ $HOME/.vim/"
+  desc "install vim-coffee-script"
+  task :coffee do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:kchmck/vim-coffee-script.git"
   end
 
-  desc "install toml.vim"
-  task :toml => 'vim:base' do
-    if File.exists?('tmp/toml.vim')
-      sh "cd tmp/toml.vim && git pull origin master"
-    else
-      sh "git clone git@github.com:cespare/vim-toml.git tmp/toml.vim"
-    end
-    sh "rsync -a --exclude 'README.md' --exclude 'LICENSE' tmp/toml.vim/ $HOME/.vim/"
+  desc "install vim-pgsql"
+  task :pgsql do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:exu/pgsql.vim.git"
   end
 
-  desc "install pgsql.vim"
-  task :rust => 'vim:base' do
-    if File.exists?('tmp/rust.vim')
-      sh "cd tmp/rust.vim && git pull origin master"
-    else
-      sh "git clone git@github.com:wting/rust.vim.git tmp/rust.vim"
-    end
-    sh "rsync -a --exclude 'README.md' tmp/rust.vim/ $HOME/.vim/"
+  desc "install vim-hdevtools && haskell-vim-now"
+  task :haskell do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:bitc/vim-hdevtools.git"
   end
 
-  desc "install purescript-vim"
-  task :purescript => 'vim:base' do
-    if File.exists?('tmp/purescript-vim')
-      sh "cd tmp/purescript-vim && git pull origin master"
-    else
-      sh "git clone git@github.com:raichoo/purescript-vim.git tmp/purescript-vim"
-    end
-    sh "mkdir -p $HOME/.vim/ftdetect"
-    sh "cp -R tmp/purescript-vim/ftdetect/* $HOME/.vim/ftdetect/"
-    sh "mkdir -p $HOME/.vim/indent"
-    sh "cp -R tmp/purescript-vim/indent/* $HOME/.vim/indent/"
-    sh "mkdir -p $HOME/.vim/syntax"
-    sh "cp -R tmp/purescript-vim/syntax/* $HOME/.vim/syntax/"
+  desc "isntall vim-toml"
+  task :toml do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:cespare/vim-toml.git"
   end
 
+  desc "install vim-purescript"
+  task :purescript do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:raichoo/purescript-vim.git"
+  end
 
   desc "install vim-slime"
-  task :slime => 'vim:base' do
-    if File.exists?('tmp/vim-slime')
-      sh "cd tmp/vim-slime && git pull origin master"
-    else
-      sh "git clone git@github.com:jpalardy/vim-slime.git tmp/vim-slime"
-    end
-    sh "cp -R tmp/vim-slime/plugin/* $HOME/.vim/plugin/"
-    sh "cp -R tmp/vim-slime/ftplugin/* $HOME/.vim/ftplugin/"
-    sh "cp -R tmp/vim-slime/doc/* $HOME/.vim/doc/"
+  task :slime do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:jpalardy/vim-slime.git"
   end
 
-
-  desc "install coffeescript syntax"
-  task :coffee do
-    if File.exists?('tmp/vim-coffee-script')
-      sh "cd tmp/vim-coffee-script && git pull origin master"
-    else
-      sh "git clone git@github.com:kchmck/vim-coffee-script.git tmp/vim-coffee-script"
-    end
-    sh "mkdir -p $HOME/.vim/after"
-    sh "cp -R tmp/vim-coffee-script/after/* $HOME/.vim/after/"
-
-    sh "mkdir -p $HOME/.vim/autoload"
-    sh "cp -R tmp/vim-coffee-script/autoload/* $HOME/.vim/autoload/"
-
-    sh "mkdir -p $HOME/.vim/compiler"
-    sh "cp -R tmp/vim-coffee-script/compiler/* $HOME/.vim/compiler/"
-
-    sh "mkdir -p $HOME/.vim/doc"
-    sh "cp -R tmp/vim-coffee-script/doc/* $HOME/.vim/doc/"
-
-    sh "mkdir -p $HOME/.vim/ftdetect"
-    sh "cp -R tmp/vim-coffee-script/ftdetect/* $HOME/.vim/ftdetect/"
-
-    sh "mkdir -p $HOME/.vim/ftplugin"
-    sh "cp -R tmp/vim-coffee-script/ftplugin/* $HOME/.vim/ftplugin/"
-
-    sh "mkdir -p $HOME/.vim/indent"
-    sh "cp -R tmp/vim-coffee-script/indent/* $HOME/.vim/indent/"
-
-    sh "mkdir -p $HOME/.vim/syntax"
-    sh "cp -R tmp/vim-coffee-script/syntax/* $HOME/.vim/syntax/"
-  end
-
-  desc "install clojure syntax"
-  task :clojure do
-    if File.exists?('tmp/vim-clojure')
-      sh "cd tmp/vim-clojure && git pull origin master"
-    else
-      sh "git clone git@github.com:vim-scripts/VimClojure.git tmp/vim-clojure"
-    end
-    sh "rsync -avz --exclude='README' --exclude='README.markdown' tmp/vim-clojure/* $HOME/.vim/"
-  end
-
-  desc "install go syntax"
+  desc "install vim-go"
   task :golang do
-    if File.exists?('tmp/vim-go')
-      sh "cd tmp/vim-go && git pull origin master"
-    else
-      sh "git clone git@github.com:anzaika/go.vim.git tmp/vim-go"
-    end
-    sh "rsync -avz --exclude='readme.txt' tmp/vim-go/* $HOME/.vim/"
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:fatih/vim-go.git"
   end
 
-  desc "install nerdtree"
-  task :nerdtree do
-    if File.exists?('tmp/vim-nerdtree')
-      sh "cd tmp/vim-nerdtree && git pull origin master"
-    else
-      sh "git clone git@github.com:scrooloose/nerdtree.git tmp/vim-nerdtree"
-    end
-    sh "rsync -avz --exclude='.gitignore' --exclude='.gitignore' --exclude='README.markdown' tmp/vim-nerdtree/* $HOME/.vim/"
-  end
-
-  desc "install elixir support"
-  task :elixir do
-    if File.exists?('tmp/vim-elixir')
-      sh "cd tmp/vim-elixir && git pull origin master"
-    else
-      sh "git clone https://github.com/elixir-lang/vim-elixir.git tmp/vim-elixir"
-    end
-    sh "rsync -avz --exclude='.*' --exclude='Gemfile*' --exclude='README*' --exclude='spec/*' tmp/vim-elixir/* $HOME/.vim/"
-  end
-
-  desc "install ruby support"
+  desc "install vim-ruby"
   task :ruby do
-    if File.exists?('tmp/vim-ruby')
-      sh "cd tmp/vim-ruby && git pull origin master"
-    else
-      sh "git clone git@github.com:vim-ruby/vim-ruby.git tmp/vim-ruby"
-    end
-    sh "rsync -avz tmp/vim-ruby/autoload $HOME/.vim/"
-    sh "rsync -avz tmp/vim-ruby/compiler $HOME/.vim/"
-    sh "rsync -avz tmp/vim-ruby/doc $HOME/.vim/"
-    sh "rsync -avz tmp/vim-ruby/ftdetect $HOME/.vim/"
-    sh "rsync -avz tmp/vim-ruby/ftplugin $HOME/.vim/"
-    sh "rsync -avz tmp/vim-ruby/indent $HOME/.vim/"
-    sh "rsync -avz tmp/vim-ruby/syntax $HOME/.vim/"
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:vim-ruby/vim-ruby.git"
   end
 
-  desc "install scala support"
-  task :scala do
-    if File.exists?('tmp/vim-scala')
-      sh "cd tmp/vim-scala && git pull origin master"
-    else
-      sh "git clone git@github.com:derekwyatt/vim-scala.git tmp/vim-scala"
-    end
-    sh "rsync -avz --exclude='.gitignore' --exclude='README' tmp/vim-scala/* $HOME/.vim/"
+  desc "install vim-hoogle"
+  task :hoogle do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:Twinside/vim-hoogle.git"
   end
+
 
 end
+
+
+
 
 def bash(command)
   Kernel.system %Q{ echo "#{command.gsub('"', '\"')}" | bash -s }
