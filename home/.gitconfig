@@ -11,5 +11,5 @@
 	interactive = auto
 [credential]
 	helper = cache
-[commit]
-	template = /home/mgreenly/.git_commit_msg.txt
+#[commit]
+#	template = /home/mgreenly/.git_commit_msg.txt
