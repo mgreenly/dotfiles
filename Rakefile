@@ -520,12 +520,9 @@ namespace :chicken do
   end
 end
 
-
-
-
-##
-## vim
-##
+#
+# vim
+#
 namespace :vim do
 
   desc "remove vim config"
@@ -536,7 +533,7 @@ namespace :vim do
   end
 
   desc "install base"
-  task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:ruby', 'vim:coffee', 'vim:pgsql', 'vim:haskell' ]
+  task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:ruby', 'vim:coffee', 'vim:pgsql', 'vim:hdevtools', 'vim:hoogle' ]
  
   desc "install vim configuration files"
   task :base do
@@ -576,9 +573,14 @@ namespace :vim do
     sh "cd $HOME/.vim/bundle && git clone git@github.com:exu/pgsql.vim.git"
   end
 
-  desc "install vim-hdevtools && haskell-vim-now"
-  task :haskell do
+  desc "install vim-hdevtools"
+  task :hdevtools do
     sh "cd $HOME/.vim/bundle && git clone git@github.com:bitc/vim-hdevtools.git"
+  end
+
+  desc "install vim-hoogle"
+  task :hoogle do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:Twinside/vim-hoogle.git"
   end
 
   desc "isntall vim-toml"
@@ -606,11 +608,16 @@ namespace :vim do
     sh "cd $HOME/.vim/bundle && git clone git@github.com:vim-ruby/vim-ruby.git"
   end
 
-  desc "install vim-hoogle"
-  task :hoogle do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:Twinside/vim-hoogle.git"
+  desc "install ghcmod.vim"
+  task :ghcmod do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:eagletmt/ghcmod-vim.git"
   end
 
+  desc "install vimproc.vim"
+  task :vimproc do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:Shougo/vimproc.vim.git"
+    sh "cd $HOME/.vim/bundle/vimproc.vim && make"
+  end
 
 end
 
@@ -653,7 +660,6 @@ task :ruby => ["home:rubygems", "rvm"] do
   end
 end
 
-
 #
 #
 #
@@ -670,9 +676,3 @@ namespace :keepass do
     end
   end
 end
-
-
-
-#
-# curl -L https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_x86_64.deb > vagrant_1.7.2_x86_64.deb
-# sudo dpkg -i vagrant_1.7.2_x86_64.deb
