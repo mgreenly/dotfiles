@@ -28,9 +28,17 @@ filetype plugin on
 noremap <Leader>q q
 noremap q <Nop>
 
-"""" delete trailing whitespace on save
-""autocmd BufWritePre *.rb :%s/\s\+$//e
-""autocmd BufWritePre *.scm :%s/\s\+$//e
+"""" trim trailing whitespace on entire buffer 
+function! TrimWhiteSpace()
+  execute '%s/\s\+$//e'
+endfunction
+noremap <C-S> :call TrimWhiteSpace()<CR>
+
+"""" automatically delete trailing whitespace
+"""" on save for these filetypes
+autocmd BufWritePre *.hs :call TrimWhiteSpace()
+autocmd BufWritePre *.rb :call TrimWhiteSpace()
+autocmd BufWritePre *.scm :call TrimWhiteSpace()
 
 "" slime config
 let g:slime_target = "tmux"
