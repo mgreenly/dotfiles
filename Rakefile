@@ -250,18 +250,11 @@ end
 namespace :purescript do
   desc "remove purescript files"
   task :clean do
-    #sh "rm -rf $HOME/tmp/purescript"
-    #sh "rm -rf $HOME/.opt/purescript"
     sh "npm uninstall -g purescript"
   end
   desc "install current purescript"
   task :install => ['node:install'] do
     sh "npm install -g purescript"
-    #sh "mkdir -p $HOME/tmp"
-    #sh "cd $HOME/tmp && git clone https://github.com/purescript/purescript.git"
-    #sh "cd $HOME/tmp/purescript && cabal sandbox init"
-    #sh "cd $HOME/tmp/purescript && cabal update"
-    #sh "cd $HOME/tmp/purescript && cabal install --prefix=$HOME/.opt/purescript"
   end
 end
 
@@ -533,7 +526,11 @@ namespace :vim do
   end
 
   desc "install base"
-  task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:ruby', 'vim:coffee', 'vim:pgsql', 'vim:hdevtools', 'vim:hoogle' ]
+  task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:surround',                # common
+                  'vim:commentary', 'vim:replacewithregister', 'vim:indent',                 # 
+                  'vim:sortmotion',                                                          #
+                  'vim:ruby', 'vim:coffee', 'vim:pgsql',                                     # ruby 
+                  'vim:hdevtools', 'vim:hoogle' ]                                            # haskell 
  
   desc "install vim configuration files"
   task :base do
@@ -544,7 +541,6 @@ namespace :vim do
     sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/home/.vim/ /home/mgreenly/Projects/dotfiles/home/.vim/ /home/mgreenly/.vim"
     sh "link /home/mgreenly/Projects/dotfiles/home/.vimrc /home/mgreenly/.vimrc"
   end
-
 
   desc "install vim-pathogen"
   task :pathogen do
@@ -617,6 +613,36 @@ namespace :vim do
   task :vimproc do
     sh "cd $HOME/.vim/bundle && git clone git@github.com:Shougo/vimproc.vim.git"
     sh "cd $HOME/.vim/bundle/vimproc.vim && make"
+  end
+
+  desc "install surround.vim"
+  task :surround do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:tpope/vim-surround.git"
+  end
+
+  desc "install commentary.vim"
+  task :commentary do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:tpope/vim-commentary.git"
+  end
+
+  desc "install replace with register"
+  task :replacewithregister do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:vim-scripts/ReplaceWithRegister.git"
+  end
+
+  desc "install vim-sort-motion"
+  task :sortmotion do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:christoomey/vim-sort-motion.git"
+  end
+
+  desc "install vim-indent"
+  task :indent do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:michaeljsmith/vim-indent-object.git"
+  end
+
+  desc "install vim-entire"
+  task :entire do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:kana/vim-textobj-entire.git"
   end
 
 end

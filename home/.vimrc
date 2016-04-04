@@ -17,7 +17,8 @@ set exrc                      " enable per-directory .vimrc files
 set laststatus=2              " show status line
 set nomodeline                " don't want editor specific commands in files
 set number                    " show linenumber
-set numberwidth=4             " set the number width
+set numberwidth=5             " set the number width
+set relativenumber            " use relative instead of absolute line numbers
 
 syntax on
 filetype on
