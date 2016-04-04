@@ -2,6 +2,7 @@ set nocompatible              "" behave like vim not vi
 execute pathogen#infect()
 
 set t_Co=256                  " force 256 color mode
+"colorscheme xoria256
 colorscheme mag256
 
 let mapleader=","
