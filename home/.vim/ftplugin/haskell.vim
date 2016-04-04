@@ -30,7 +30,7 @@ if exists("syntax_on")
   syntax reset
 endif
 
-let g:colors_name = "mgHaskell"
+"let g:colors_name = "mgHaskell"
 
 set cursorcolumn          " highlight the cursors column
 set cursorline            " highlight the cursors row
@@ -40,10 +40,6 @@ highlight CursorColumn   ctermfg=none  ctermbg=235   cterm=none
 highlight CursorLine     ctermfg=none  ctermbg=235   cterm=none
 highlight CursorLineNr   ctermfg=239  ctermbg=235   cterm=none
 highlight LineNr         ctermfg=239  ctermbg=none   cterm=none
-
-"" The status line 
-"hi StatusLine            ctermfg=249  ctermbg=232 cterm=none
-"hi StatusLineNC          ctermfg=249  ctermbg=249 cterm=none
 
 highlight Normal               ctermfg=007 ctermbg=none cterm=none
 
@@ -56,6 +52,14 @@ highlight hsConditional        ctermfg=214 ctermbg=none cterm=none
 highlight hsNumber             ctermfg=038 ctermbg=none cterm=none
 highlight hsString             ctermfg=038 ctermbg=none cterm=none
 highlight hsCharacter          ctermfg=038 ctermbg=none cterm=none 
+
+
+
+
+"" The status line 
+"hi StatusLine            ctermfg=249  ctermbg=232 cterm=none
+"hi StatusLineNC          ctermfg=249  ctermbg=249 cterm=none
+
 
 "highlight hsVarSym             ctermfg=none ctermbg=none cterm=none
 "highlight hsConSym             ctermfg=none ctermbg=none cterm=none
