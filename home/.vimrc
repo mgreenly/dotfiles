@@ -42,10 +42,10 @@ autocmd BufWritePre *.hs :call TrimWhiteSpace()
 autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
 
-"" slime config
+"""" slime config
 let g:slime_target = "tmux"
 
-" Show syntax highlighting groups for word under cursor
+"""" Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
@@ -53,3 +53,26 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
+"""" Read output of command into new botright buffer
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+  echo a:cmdline
+  let expanded_cmdline = a:cmdline
+  for part in split(a:cmdline, ' ')
+     if part[0] =~ '\v[%#<]'
+        let expanded_part = fnameescape(expand(part))
+        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
+     endif
+  endfor
+  botright vnew
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  call setline(1, "=========START-OF-OUTPUT=========") 
+  silent execute '$read !'. expanded_cmdline
+  call append(line('$'), "==========END-OF-OUTPUT==========") 
+  setlocal nomodifiable
+  1
+endfunction
+
+command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>)
+command! -complete=file -nargs=* ReadStackBuild call s:RunShellCommand('stack build --force-dirty --fast')

@@ -211,3 +211,8 @@ export CPATH
 if [ -d "/home/mgreenly/.stack/programs/x86_64-linux/ghc-7.10.3/bin" ]; then
   PATH="$HOME/.stack/programs/x86_64-linux/ghc-7.10.3/bin:$PATH"
 fi
+
+if [ -e "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER" ]; then
+  source "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER"
+fi
+

@@ -128,6 +128,7 @@ map <leader>r :exe '!clear && stack build && clear && stack exec $PACKAGE_NAME-a
 map <leader>s :exe '!clear && stack test'<CR>
 "" spec - run specs
 
+
 " HASKTAGS
 "   - jump to tag
 noremap <leader>t "zyiw:exe 'tag '.@z<CR>
@@ -138,17 +139,10 @@ noremap <leader>z :exe 'pop'<CR>
 
 
 "
-" HLINT
-"   - lint current file
-map <F7> "zyiw:exe '!clear && stack exec hlint -- -c=auto -s '.@%<CR>
-
-
-"
 " HDEVTOOLS
 "   - show type under cursor
 noremap <F5> :HdevtoolsType<CR>
 "   - clear type info
-map <silent> <S-F5> :HdevtoolsClear<CR>
 
 
 " HOOGLE
@@ -156,6 +150,12 @@ map <silent> <S-F5> :HdevtoolsClear<CR>
 noremap <F6> :Hoogle<CR>
 "   - clear search 
 noremap <S-F6> :HoogleClose<CR>
+
+
+"
+" HLINT
+"   - lint current file
+map <F7> "zyiw:exe '!clear && stack exec hlint -- -c=auto -s '.@%<CR>
 EOF
 
 
