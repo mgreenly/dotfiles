@@ -1,4 +1,4 @@
-set nocompatible              "" behave like vim not vi 
+set nocompatible              "" behave like vim not vi
 execute pathogen#infect()
 
 set t_Co=256                  " force 256 color mode
@@ -20,6 +20,7 @@ set nomodeline                " don't want editor specific commands in files
 set number                    " show linenumber
 set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
+set list                      " show trailing white space
 
 syntax on
 filetype on
@@ -30,7 +31,7 @@ filetype plugin on
 noremap <Leader>q q
 noremap q <Nop>
 
-"""" trim trailing whitespace on entire buffer 
+"""" trim trailing whitespace on entire buffer
 function! TrimWhiteSpace()
   execute '%s/\s\+$//e'
 endfunction
@@ -67,9 +68,9 @@ function! s:RunShellCommand(cmdline)
   endfor
   botright vnew
   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-  call setline(1, "=========START-OF-OUTPUT=========") 
+  call setline(1, "=========START-OF-OUTPUT=========")
   silent execute '$read !'. expanded_cmdline
-  call append(line('$'), "==========END-OF-OUTPUT==========") 
+  call append(line('$'), "==========END-OF-OUTPUT==========")
   setlocal nomodifiable
   1
 endfunction

@@ -554,7 +554,7 @@ namespace :vim do
     sh "cd $HOME/.vim/bundle && git clone git://github.com/tpope/vim-sensible.git"
   end
 
-  desc "install vim-sensible"
+  desc "install vim-syntastic"
   task :syntastic do
     sh "cd $HOME/.vim/bundle && git clone https://github.com/scrooloose/syntastic.git"
   end
@@ -638,11 +638,6 @@ namespace :vim do
   desc "install vim-indent"
   task :indent do
     sh "cd $HOME/.vim/bundle && git clone git@github.com:michaeljsmith/vim-indent-object.git"
-  end
-
-  desc "install vim-entire"
-  task :entire do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:kana/vim-textobj-entire.git"
   end
 
 end
