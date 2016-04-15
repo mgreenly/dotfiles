@@ -28,7 +28,7 @@ end
 #
 namespace :secrets do
   file "secrets.tar.gz.asc" => FileList["secrets/**/*", "secrets/**/.*"] do |task|
-    sh %{tar -zcv secrets | gpg --yes --symmetric --armor -o secrets.tar.gz.asc -}
+    exec %{tar -zchv secrets | gpg --yes --symmetric --cipher-algo AES256 --armor -o secrets.tar.gz.asc -}
   end
 
   desc "encrypt secrets/ to secrets.tar.gz.asc"
@@ -38,7 +38,7 @@ namespace :secrets do
   desc "decrypt secrets.tar.gz.asc to secrets/"
   task :decrypt do
     next if File.exists?("secrets") && File.mtime("secrets") > File.mtime("secrets.tar.gz.asc")
-    sh %{rm -rf secrets && gpg --decrypt  secrets.tar.gz.asc | tar -xvzf - && touch secrets}
+    exec %{rm -rf secrets && gpg --decrypt  secrets.tar.gz.asc | tar -xvzf - && touch secrets}
   end
 end
 
