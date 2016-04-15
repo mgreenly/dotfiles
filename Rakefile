@@ -3,6 +3,8 @@ require 'fileutils'
 require 'pathname'
 
 
+DOTFILEDIR = File.dirname(File.expand_path(__FILE__))
+
 TMPDIR = File.join(Dir.home,"tmp")
 
 USER_BIN = File.join(Dir.home, "bin")
@@ -84,21 +86,16 @@ namespace :home do
 
   desc "configure ssh"
   task :ssh => "secrets:decrypt" do
-    sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/secrets/ssh/ /home/mgreenly/Projects/dotfiles/secrets/ssh/ /home/mgreenly/.ssh"
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.ssh/ #{DOTFILEDIR}/home/.ssh /home/mgreenly/"
+  end
+
+  task :gnupg => "secrets:decrypt" do
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.gnupg/ #{DOTFILEDIR}/home/.gnupg /home/mgreenly/"
   end
 
   desc "aws credentials"
-  task :awscredentials do
-    sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/secrets/awscredentials/ /home/mgreenly/Projects/dotfiles/secrets/awscredentials/ /home/mgreenly/.awscredentials"
-  end
-
-  desc "configure secrets"
-  task :secrets => "secrets:decrypt" do
-    src = File.expand_path(File.join('..','secrets'),__FILE__)
-    dst = File.join(Dir.home,'.secrets')
-    sh "rm -f #{dst}"
-    sh "ln -sf #{src} #{dst}"
-    sh "cp -f secrets/.pgpass #{File.join(Dir.home, '.pgpass')}"
+  task :aws do
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.aws/ #{DOTFILEDIR}/home/.aws /home/mgreenly/"
   end
 
   desc "configure bash"
