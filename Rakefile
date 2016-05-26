@@ -527,7 +527,7 @@ namespace :vim do
                   'vim:commentary', 'vim:replacewithregister', 'vim:indent',                 # 
                   'vim:sortmotion',                                                          #
                   'vim:ruby', 'vim:coffee', 'vim:pgsql',                                     # ruby 
-                  'vim:hdevtools', 'vim:hoogle' ]                                            # haskell 
+                  'vim:hdevtools', 'vim:hoogle']                                             # haskell 
  
   desc "install vim configuration files"
   task :base do
@@ -635,6 +635,11 @@ namespace :vim do
   desc "install vim-indent"
   task :indent do
     sh "cd $HOME/.vim/bundle && git clone git@github.com:michaeljsmith/vim-indent-object.git"
+  end
+
+  desc "install vim-haskell-indent"
+  task :haskell_indent do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:itchyny/vim-haskell-indent.git"
   end
 
 end

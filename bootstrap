@@ -1,5 +1,7 @@
 #!/bin/bash
 
+{ # wrap scritp to prevent partial execution from partial download
+
 #
 #  This script prepares a fresh linux installation for use with the
 #  rakefile included in the dotfiles repository.
@@ -193,3 +195,5 @@ if [[ -f /var/run/reboot-required ]]; then
   echo "Reboot required!"
   echo
 fi
+
+} # end of wrapping
