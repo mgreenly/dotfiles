@@ -1,0 +1,137 @@
+#!/bin/bash
+
+#
+# This script creates *.deb files for stack based haskell applications
+#
+set -u
+
+
+DPKG_ARCHITECTURE=`dpkg-architecture | grep -e '^DEB_BUILD_ARCH=' | cut -d'=' -f2`
+if [ -z "$DPKG_ARCHITECTURE" ]; then
+  echo "ERROR, unable to determine dpkg-architecture"
+  exit 1
+fi
+
+CABAL_FILE=`find . -iname *.cabal -printf "%f"`
+if [ -z "$CABAL_FILE" ]; then
+  echo "ERROR, unable to locate *.cabal file"
+  exit 1
+fi
+
+PACKAGE_NAME=`grep -e '^name' $CABAL_FILE | tr -s ' ' | cut -d' ' -f2`
+if [ -z "$PACKAGE_NAME" ]; then
+  echo "ERROR, unable to determine package name from $CABAL_FILE"
+  exit 1
+fi
+
+PACKAGE_VERSION=`grep -e '^version' $CABAL_FILE | tr -s ' ' | cut -d' ' -f2`
+if [ -z "$PACKAGE_NAME" ]; then
+  echo "ERROR, unable to determine package name from $CABAL_FILE"
+  exit 1
+fi
+
+PACKAGE_AUTHOR=`grep -e '^author' $CABAL_FILE | tr -s ' ' | cut -d' ' -f2-`
+if [ -z "$PACKAGE_AUTHOR" ]; then
+  echo "ERROR, unable to determine package author from $CABAL_FILE"
+  exit 1
+fi
+
+PACKAGE_SYNOPSIS=`grep -e '^synopsis' $CABAL_FILE | tr -s ' ' | cut -d' ' -f2-`
+if [ -z "$PACKAGE_SYNOPSIS" ]; then
+  echo "ERROR, unable to determine package synopsis from $CABAL_FILE"
+  exit 1
+fi
+
+
+LOCAL_INSTALL_ROOT=$(stack path | grep "local-install-root" | cut -f2 -d' ')
+if [ -z $LOCAL_INSTALL_ROOT ]; then
+  echo "ERROR, unable determine stack's local-install-root"
+  exit 1
+fi
+
+DEB_FILE="$PACKAGE_NAME"_"$PACKAGE_VERSION"-debian-jessie_amd64.deb
+
+
+#
+# remove previous build artifacts
+#
+if [[ -e ./pkg-debian ]];then
+  rm -f $DEB_FILE
+  rm -rf pkg-debian
+fi
+
+#
+# build the project
+#
+stack build --force-dirty
+
+#
+# COPY FILES
+#
+mkdir -p pkg-debian/DEBIAN
+
+mkdir -p pkg-debian/usr/bin
+cp $LOCAL_INSTALL_ROOT/bin/* pkg-debian/usr/bin/
+
+mkdir -p pkg-debian/usr/share/doc/$PACKAGE_NAME
+cp LICENSE pkg-debian/usr/share/doc/$PACKAGE_NAME/copyright
+
+#
+# CALC INSTALLED SIZE IN BYTES
+#
+INSTALLED_SIZE=$(find ./pkg-debian -type f -exec du -cb {} + | grep total$ | cut -f1 | paste -sd+ - | bc )
+
+
+#
+# CONTROL
+#
+cat << EOF > pkg-debian/DEBIAN/control
+Package: $PACKAGE_NAME
+Version: $PACKAGE_VERSION
+Architecture: $DPKG_ARCHITECTURE
+Section: contrib/misc
+Description: $PACKAGE_SYNOPSIS
+Essential: no
+Priority: optional
+Depends: libgmp10 (>=2.6)
+Maintainer: $PACKAGE_AUTHOR
+Installed-Size: $(expr $INSTALLED_SIZE / 1024)
+EOF
+
+
+#
+# CONFFILES
+#
+cat << EOF > pkg-debian/DEBIAN/conffiles
+EOF
+
+#
+# POSTINST
+#
+cat << EOF > pkg-debian/DEBIAN/postinst
+#!/bin/sh
+
+exit 0
+EOF
+chmod 0755 pkg-debian/DEBIAN/postinst
+
+#
+# PRERM
+#
+cat << EOF > pkg-debian/DEBIAN/prerm
+#!/bin/sh
+
+exit 0
+EOF
+chmod 0755 pkg-debian/DEBIAN/prerm
+
+
+#
+# MD5SUMS
+#
+find pkg-debian -not -path "$LOCAL_INSTALL_ROOT/bin*" -type f -exec md5sum {} \; > pkg-debian/DEBIAN/md5sums
+
+dpkg -b pkg-debian $DEB_FILE
+
+reprepro -b ~/Projects/repos/ remove jessie $PACKAGE_NAME
+reprepro -b /home/mgreenly/Projects/repos includedeb jessie $DEB_FILE

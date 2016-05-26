@@ -1,3 +1,0 @@
-#!/bin/sh
-
-docker run --rm -i -t   -v $PWD:/home/haskell/project   mgreenly/debian-stack:latest    vim $@
