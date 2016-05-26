@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rm *.deb
+rm -rf pkg-debian
