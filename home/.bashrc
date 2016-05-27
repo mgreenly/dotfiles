@@ -49,7 +49,6 @@ else
 fi
 unset color_prompt
 
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -158,14 +157,12 @@ if [ -f "$HASKELL_ENVIRONMENT_FILE" ]; then
   source "$HASKELL_ENVIRONMENT_FILE"
 fi
 
-alias hasktags='hasktags -cLR'
-
 if [ -d "$HOME/.opt/idris/bin" ] ; then
   PATH="$HOME/.opt/idris/bin:$PATH"
 fi
 
-if [ -d "/usr/lib/jvm/java-6-openjdk-amd64/jre" ] ; then
-  export JAVA_HOME="/usr/lib/jvm/java-6-openjdk-amd64/jre"
+if [ -d "/usr/lib/jvm/java-7-openjdk-amd64/jre" ] ; then
+  export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre"
 fi
 
 if [ -d "$HOME/.opt/node/bin" ]; then
@@ -190,12 +187,6 @@ export LD_LIBRARY_PATH
 export CPATH 
 
 . /etc/profile.d/vte.sh
-
-# alias runghc="stack --resolver=lts-5.4 --verbosity=0 runghc"
-
-if [ -d "/home/mgreenly/.stack/programs/x86_64-linux/ghc-7.10.3/bin" ]; then
-  PATH="$HOME/.stack/programs/x86_64-linux/ghc-7.10.3/bin:$PATH"
-fi
 
 if [ -e "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER" ]; then
   source "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER"
