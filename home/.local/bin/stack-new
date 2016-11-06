@@ -74,10 +74,6 @@ library
   ghc-options:         -O2
                        -threaded
                        -with-rtsopts=-N
-                       -static
-                       -optc-static
-                       -optl-static
-                       -optl-pthread
   build-depends:       base                    >= 4.8
 
 test-suite $PACKAGE_NAME-test
@@ -118,7 +114,7 @@ executable             $PACKAGE_NAME
   other-modules:       Foo
   ghc-options:         -O2
                        -threaded
-                       "-with-rtsopts=-N"
+                       -with-rtsopts=-N
   build-depends:       base                    >= 4.8
 
 test-suite $PACKAGE_NAME-test
@@ -170,7 +166,7 @@ map <leader>P :exe '!clear && stack exec $PACKAGE_NAME -- +RTS -sstderr'<CR>
 map <leader>e :exe '!clear && stack build --ghc-options="-eventlog -rtsopts"'<CR>
 map <leader>E :exe '!clear && stack exec $PACKAGE_NAME -- +RTS -N2 -l'<CR>
 "" build - build project
-map <leader>b :exe '!clear && stack build --pedantic'<CR>
+map <leader>b :exe '!clear && stack build'<CR>
 "" clean - clean build artifacts
 map <leader>c :exe '!clear && stack clean'<CR>
 "" interactive - load modules in repl

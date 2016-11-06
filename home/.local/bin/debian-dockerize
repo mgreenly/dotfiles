@@ -6,13 +6,23 @@
 # base image.
 #
 
-if [[ -e ./Dockerfile ]];then 
-  echo "Dockerfile already exists.  Cowardly refusing to run."
+if [[ -e ./Dockerfile.debian ]];then 
+  echo "Dockerfile.debian already exists.  Cowardly refusing to run."
   exit
 fi
 
-if [[ -e ./build.sh ]];then 
-  echo "build.sh already exists.  Cowardly refusing to run."
+if [[ -e ./build.debian.sh ]];then 
+  echo "build.debian.sh already exists.  Cowardly refusing to run."
+  exit
+fi
+
+if [[ -e ./run.debian.sh ]];then
+  echo "run.debian.sh already exists.  Cowardly refusing to run."
+  exit
+fi
+
+if [[ ! -e ./stack.yaml ]];then
+  echo "stack.yaml does not exist.  Cowardly refusing to run."
   exit
 fi
 
@@ -31,10 +41,11 @@ IMAGE_NAME=${1:-$(basename $PWD)}
 #
 # the stack comamnd
 #
-mkdir -p $PWD/.debian-stack
-STACKCMD="docker run --rm -v $PWD/.debian-stack:/home/haskell/.stack -v $PWD:/data mgreenly/debian-stack:latest /usr/bin/stack"
+mkdir -p $HOME/.stack.debian
+ln -s $HOME/.stack.debian .stack.debian
+STACKCMD="docker run --rm -v $PWD/.stack.debian:/home/haskell/.stack -v $PWD:/project mgreenly/debian-stack:latest /usr/bin/stack"
 
-if [ ! -e .debian-stack/config.yaml ]; then
+if [ ! -e .stack.debian/config.yaml ]; then
   STACK_INSTALL_ROOT_DIR=$(eval "$STACKCMD" setup)
 fi
 
@@ -45,7 +56,7 @@ STACK_INSTALL_BIN_PATH=${STACK_INSTALL_ROOT_DIR}/bin
 #
 # stack only allows paths relative to the current directory
 #
-REL_STACK_BINDIR=${STACK_INSTALL_BIN_PATH#/data/}
+REL_STACK_BINDIR=${STACK_INSTALL_BIN_PATH#/project/}
 
 #
 # try to find the name of the executable as it's defined in the cabal file
@@ -58,35 +69,45 @@ EXE_NAME=`grep -e '^executable' $CABAL_FILE | tr -s ' ' | cut -d' ' -f2`
 # the template for the Dockerfile.  Be sure to include any
 # specific library dependencies you're application requires
 #
-cat << EOF > Dockerfile
+cat << EOF > Dockerfile.debian
+# vim:syntax=dockerfile
+
 FROM debian:latest
 
-RUN DEBIAN_FRONTEND=noninteractive               \\
-    apt-get -q -y update                         \\
-    && apt-get                                   \\
-      -o Dpkg::Options::="--force-confdef"       \\
-      -o Dpkg::Options::="--force-confold"       \\
-      -q -y install                              \\
-      libgmp10                                   \\
-    && apt-get clean                             \\
-    && rm -rf /var/lib/apt/lists/*
-
 ADD $REL_STACK_BINDIR /usr/local/bin
+
+# if you need additional system packages add them
+# here, or if you build a static application you
+# can remove all the apt-get commands here.
+RUN DEBIAN_FRONTEND=noninteractive                    \\
+    apt-get -q -y update                              \\
+    && apt-get                                        \\
+      -o Dpkg::Options::="--force-confdef"            \\
+      -o Dpkg::Options::="--force-confold"            \\
+      -q -y install                                   \\
+      libgmp10                                        \\
+    && apt-get clean                                  \\
+    && rm -rf /var/lib/apt/lists/*                    \\
+    && adduser --disabled-password --gecos "" haskell
+
+USER haskell
+
+WORKDIR /home/haskell
 
 CMD $EXE_NAME
 EOF
 
 #
-# generate .dockerignore file
+# add lines to .dockerignore file
 #
-cat << EOF > .dockerignore
-.debian-stack
-EOF
+touch .dockerignore
+grep -q -F '.stack.debian' .dockerignore || echo '.stack.debian' >> .dockerignore
+grep -q -F '.stack-work/dist' .dockerignore || echo '.stack-work/dist' >> .dockerignore
 
 #
-# generate run.sh file
+# generate run.debian.sh file
 #
-cat << EOF > run.sh
+cat << EOF > run.debian.sh
 #!/bin/bash
 
 #
@@ -105,12 +126,12 @@ docker run --rm -it \\
   $USER/$IMAGE_NAME:latest \\
   $IMAGE_NAME \$@
 EOF
-chmod +x run.sh
+chmod +x run.debian.sh
 
 #
 # generate a build script
 #
-cat << EOF > build.sh
+cat << EOF > build.debian.sh
 #!/bin/bash
 
 #
@@ -138,7 +159,7 @@ oldid=\$(docker images --format="{{.ID}}:{{.Tag}}" \$IMAGE_NAME | grep latest | 
 # generate the tag for the new image and build it also tag it latest
 #
 newtag=\$(date +"%Y%m%d%H%M%S")
-docker build -t \$IMAGE_NAME:\$newtag .
+docker build -f Dockerfile.debian -t \$IMAGE_NAME:\$newtag .
 docker tag \$IMAGE_NAME:"\$newtag" \$IMAGE_NAME:latest
 
 if [[ -n "\$oldtag" ]]; then
@@ -150,15 +171,17 @@ fi
 #
 #docker push $IMAGE_NAME:latest
 EOF
-chmod +x build.sh
+chmod +x build.debian.sh
 
 
 
 #
-# output message 
+# output message
 #
 echo
-echo "Dockerfile - successfully created"
-echo 
-echo "  to build use \"stack build\"."
+echo "Project successfully dockerized, to build and run it do something like this..."
+echo
+echo "  debian-stack build"
+echo "  docker build -f Dockerfile.debian -t $USER/$IMAGE_NAME ."
+echo "  docker run --rm -it --name $IMAGE_NAME $USER/$IMAGE_NAME"
 echo

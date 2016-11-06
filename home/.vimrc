@@ -16,7 +16,7 @@ set nowrap                    " don't wrap long lines
 set hidden                    " don't force save before opening buffer
 set exrc                      " enable per-directory .vimrc files
 set laststatus=2              " show status line
-set nomodeline                " don't want editor specific commands in files
+"" set nomodeline                " don't want editor specific commands in files
 set number                    " show linenumber
 set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
@@ -66,7 +66,7 @@ function! s:RunShellCommand(cmdline)
         let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
      endif
   endfor
-  botright vnew
+  botright new
   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
   call setline(1, "=========START-OF-OUTPUT=========")
   silent execute '$read !'. expanded_cmdline

@@ -42,15 +42,15 @@ if [ -z "$PACKAGE_SYNOPSIS" ]; then
   exit 1
 fi
 
-
-LOCAL_INSTALL_ROOT=$(stack path | grep "local-install-root" | cut -f2 -d' ')
+LOCAL_INSTALL_ROOT=$(stack path --local-install-root)
 if [ -z $LOCAL_INSTALL_ROOT ]; then
   echo "ERROR, unable determine stack's local-install-root"
   exit 1
 fi
 
-DEB_FILE="$PACKAGE_NAME"_"$PACKAGE_VERSION"-debian-jessie_amd64.deb
+PACKAGE_REVISION=$(date +"%Y%m%d%H%M")
 
+DEB_FILE="$PACKAGE_NAME"_"$PACKAGE_VERSION"-"$PACKAGE_REVISION"_"$DPKG_ARCHITECTURE".deb
 
 #
 # remove previous build artifacts
@@ -133,5 +133,5 @@ find pkg-debian -not -path "$LOCAL_INSTALL_ROOT/bin*" -type f -exec md5sum {} \;
 
 dpkg -b pkg-debian $DEB_FILE
 
-reprepro -b ~/Projects/repos/ remove jessie $PACKAGE_NAME
-reprepro -b /home/mgreenly/Projects/repos includedeb jessie $DEB_FILE
+#reprepro -b ~/Projects/repos/ remove jessie $PACKAGE_NAME
+#reprepro -b /home/mgreenly/Projects/repos includedeb jessie $DEB_FILE
