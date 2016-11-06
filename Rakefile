@@ -2,6 +2,7 @@ require 'etc'
 require 'fileutils'
 require 'pathname'
 
+# this is a comment in 
 
 DOTFILEDIR = File.dirname(File.expand_path(__FILE__))
 
