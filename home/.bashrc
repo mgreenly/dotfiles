@@ -191,3 +191,4 @@ export CPATH
 if [ -e "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER" ]; then
   source "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER"
 fi
+export PATH=$HOME/.cabal/bin:$PATH

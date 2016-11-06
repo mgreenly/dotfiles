@@ -137,7 +137,7 @@ namespace :node do
   desc "install node"
   task :install => [:tmpdir] do
     next if File.exists?(File.join(Dir.home, '.opt', 'node'))
-    node_ver = "5.3.0"
+    node_ver = "6.9.1"
     unless File.exists?("#{TMPDIR}/node-v#{node_ver}.tar.gz")
       sh "curl -s http://nodejs.org/dist/v#{node_ver}/node-v#{node_ver}.tar.gz > #{TMPDIR}/node-v#{node_ver}.tar.gz"
     end
@@ -251,7 +251,7 @@ namespace :purescript do
   end
   desc "install current purescript"
   task :install => ['node:install'] do
-    sh "npm install -g purescript"
+    sh "npm install -g purescript pulp bower"
   end
 end
 

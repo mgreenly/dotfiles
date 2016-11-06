@@ -6,13 +6,23 @@
 # base image.
 #
 
-if [[ -e ./Dockerfile ]];then 
+if [[ -e ./Dockerfile.alpine ]];then
   echo "Dockerfile already exists.  Cowardly refusing to run."
   exit
 fi
 
-if [[ -e ./build.sh ]];then 
+if [[ -e ./build.alpine.sh ]];then
   echo "build.sh already exists.  Cowardly refusing to run."
+  exit
+fi
+
+if [[ -e ./run.alpine.sh ]];then
+  echo "run.sh already exists.  Cowardly refusing to run."
+  exit
+fi
+
+if [[ ! -e ./stack.yaml ]];then
+  echo "stack.yaml does not exist.  Cowardly refusing to run."
   exit
 fi
 
@@ -31,8 +41,13 @@ IMAGE_NAME=${1:-$(basename $PWD)}
 #
 # the stack comamnd
 #
-mkdir -p $PWD/.alpine-stack
-STACKCMD="docker run --rm -v $PWD/.alpine-stack:/home/alpine/.stack -v $PWD:/project mgreenly/alpine-stack:latest /usr/bin/stack"
+mkdir -p $HOME/.stack.alpine
+ln -s $HOME/.stack.alpine .stack.alpine
+STACKCMD="docker run --rm -v $PWD/.stack.alpine:/home/alpine/.stack -v $PWD:/project mgreenly/alpine-stack:latest /usr/bin/stack"
+
+if [ ! -e .stack.alpine/config.yaml ]; then
+  STACK_INSTALL_ROOT_DIR=$(eval "$STACKCMD" setup)
+fi
 
 STACK_INSTALL_ROOT_DIR=$(eval "$STACKCMD" path | grep "local-install-root" | cut -f2 -d' ')
 STACK_INSTALL_BIN_PATH=${STACK_INSTALL_ROOT_DIR}/bin
@@ -53,18 +68,63 @@ EXE_NAME=`grep -e '^executable' $CABAL_FILE | tr -s ' ' | cut -d' ' -f2`
 # the template for the Dockerfile.  Be sure to include any
 # specific library dependencies you're application requires
 #
-cat << EOF > Dockerfile
+cat << EOF > Dockerfile.alpine
+# vim:syntax=dockerfile
+
 FROM alpine:latest
 
 ADD $REL_STACK_BINDIR /usr/local/bin
+
+# if you need additional system packages add them
+# here, or if you build a static application you
+# can remove all the apk-add command.
+RUN apk update                      \\
+    && apk add gmp                  \\
+    && adduser -D -u1000 haskell
+
+USER haskell
+
+WORKDIR /home/haskell
 
 CMD $EXE_NAME
 EOF
 
 #
+# add lines to .dockerignore file
+#
+grep -q -F '.stack.alpine' .dockerignore || echo '.stack.alpine' >> .dockerignore
+grep -q -F '.stack-work/dist' dockerignore || echo '.stack-work/dist' >> .dockerignore
+
+
+#
+# generate run.alpine.sh file
+#
+cat << EOF > run.alpine.sh
+#!/bin/bash
+
+#
+# immediately exit if we access any unset variables
+#
+set -u
+
+#
+# pass all the necessary environment varialbes and any
+# command line arguments to the container and run it
+#
+docker run --rm -it \\
+  -e "EXAMPLE=$EXAMPLE" \\
+  --name $IMAGE_NAME \\
+  $USER/$IMAGE_NAME:latest \\
+  $IMAGE_NAME \$@
+EOF
+chmod +x run.alpine.sh
+
+
+
+#
 # generate a build script
 #
-cat << EOF > build.sh
+cat << EOF > build.alpine.sh
 #!/bin/bash
 
 #
@@ -92,7 +152,7 @@ oldid=\$(docker images --format="{{.ID}}:{{.Tag}}" \$IMAGE_NAME | grep latest | 
 # generate the tag for the new image and build it also tag it latest
 #
 newtag=\$(date +"%Y%m%d%H%M%S")
-docker build -t \$IMAGE_NAME:\$newtag .
+docker build -f Dockerfile.alpine -t \$IMAGE_NAME:\$newtag .
 docker tag \$IMAGE_NAME:"\$newtag" \$IMAGE_NAME:latest
 
 if [[ -n "\$oldtag" ]]; then
@@ -104,13 +164,15 @@ fi
 #
 #docker push $IMAGE_NAME:latest
 EOF
-chmod +x build.sh
+chmod +x build.alpine.sh
 
 #
-# output message 
+# output message
 #
 echo
-echo "Dockerfile - successfully created"
-echo 
-echo "  to build use something like: \"docker build -t $USER/$IMAGE_NAME .\""
+echo "Project successfully dockerized, to build and run it do something like this..."
+echo
+echo "  alpine-stack build"
+echo "  docker build -f Dockerfile.alpine -t $USER/$IMAGE_NAME ."
+echo "  docker run --rm -it --name $IMAGE_NAME $USER/$IMAGE_NAME"
 echo
