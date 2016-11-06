@@ -24,10 +24,8 @@ highlight CursorLineNr   ctermfg=239  ctermbg=235   cterm=none
 "" The number row
 highlight LineNr         ctermfg=239  ctermbg=none   cterm=none
 
-highlight hsLineComment  ctermfg=241 ctermbg=none cterm=none  
+highlight hsLineComment  ctermfg=241 ctermbg=none cterm=none
 highlight hsBlockComment ctermfg=241 ctermbg=none cterm=none
-
-
 
 
 
