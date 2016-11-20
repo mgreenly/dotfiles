@@ -2,7 +2,6 @@ set nocompatible              "" behave like vim not vi
 execute pathogen#infect()
 
 set t_Co=256                  " force 256 color mode
-"colorscheme xoria256
 colorscheme mag256
 
 let mapleader=","
@@ -20,7 +19,7 @@ set laststatus=2              " show status line
 set number                    " show linenumber
 set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
-set list                      " show trailing white space
+set nolist                    " show trailing white space
 
 syntax on
 filetype on
@@ -77,3 +76,6 @@ endfunction
 
 command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>)
 command! -complete=file -nargs=* ReadStackBuild call s:RunShellCommand('stack build --force-dirty --fast')
+
+"" inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
+"" inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
