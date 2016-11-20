@@ -523,12 +523,13 @@ namespace :vim do
     sh "rm -rf tmp/"
   end
 
-  desc "install base"
+  desc "install base/pathogen/sensible/surround/commentary/replacewithregister/indent/sortmotion/ruby/coffee/pgsql/hdevtools/hoogle"
   task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:surround',                # common
                   'vim:commentary', 'vim:replacewithregister', 'vim:indent',                 # 
                   'vim:sortmotion',                                                          #
                   'vim:ruby', 'vim:coffee', 'vim:pgsql',                                     # ruby 
-                  'vim:hdevtools', 'vim:hoogle']                                             # haskell 
+                  'vim:hdevtools', 'vim:hoogle'
+                ]
  
   desc "install vim configuration files"
   task :base do
