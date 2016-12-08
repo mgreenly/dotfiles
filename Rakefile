@@ -528,7 +528,7 @@ namespace :vim do
                   'vim:commentary', 'vim:replacewithregister', 'vim:indent',                 # 
                   'vim:sortmotion',                                                          #
                   'vim:ruby', 'vim:coffee', 'vim:pgsql',                                     # ruby 
-                  'vim:hdevtools', 'vim:hoogle'
+                  'vim:hoogle'
                 ]
  
   desc "install vim configuration files"
