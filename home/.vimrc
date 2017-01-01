@@ -26,6 +26,9 @@ filetype on
 filetype indent on
 filetype plugin on
 
+"" disable 'save and quit' because it's to close to 'suspend' (<C-z>)
+map <S-z><S-z> <Nop>
+
 "" remap the record macro to leader q
 noremap <Leader>q q
 noremap q <Nop>
