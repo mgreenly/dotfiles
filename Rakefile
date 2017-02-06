@@ -553,6 +553,17 @@ namespace :vim do
     sh "cd $HOME/.vim/bundle && git clone git://github.com/tpope/vim-sensible.git"
   end
 
+
+  desc "install vim-elm"
+  task :elm do
+    sh "cd $HOME/.vim/bundle && git clone git@github.com:ElmCast/elm-vim.git"
+  end
+
+  desc "install enuch.vim"
+  task :eunuch do
+    sh "cd $HOME/.vim/bundle && git clone git://github.com/tpope/vim-eunuch.git"
+  end
+
   desc "install vim-syntastic"
   task :syntastic do
     sh "cd $HOME/.vim/bundle && git clone https://github.com/scrooloose/syntastic.git"
