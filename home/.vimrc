@@ -15,11 +15,11 @@ set nowrap                    " don't wrap long lines
 set hidden                    " don't force save before opening buffer
 set exrc                      " enable per-directory .vimrc files
 set laststatus=2              " show status line
-"" set nomodeline                " don't want editor specific commands in files
 set number                    " show linenumber
 set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
 set nolist                    " show trailing white space
+"" set nomodeline                " don't want editor specific commands in files
 
 syntax on
 filetype on
