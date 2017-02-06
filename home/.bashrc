@@ -169,9 +169,8 @@ if [ -d "$HOME/.opt/node/bin" ]; then
   PATH="$HOME/.opt/node/bin:$PATH"
 fi
 
-if [ -d "$HOME/.opt/rust/bin" ] ; then
-  PATH="$HOME/.opt/rust/bin:$PATH"
-  LD_LIBRARY_PATH="$HOME/.opt/rust/lib:$LD_LIBRARY_PATH"
+if [ -d "$HOME/.cargo/bin" ] ; then
+  PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 # rvm's scripts are retarded and complain if
