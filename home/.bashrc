@@ -191,3 +191,7 @@ if [ -e "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER" ]; then
   source "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER"
 fi
 export PATH=$HOME/.cabal/bin:$PATH
+
+alias dc="docker-compose"
+alias dm="docker-machine"
+alias ls='ls --color=auto --group-directories-first'
