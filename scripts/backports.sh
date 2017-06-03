@@ -10,4 +10,3 @@ fi
 echo "deb http://ftp.debian.org/debian/ wheezy-backports main non-free contrib" | tee /etc/apt/sources.list.d/backports.list
 apt-get update
 apt-get -t jessie-backports install linux-image-amd64 linux-headers-amd64
-#reboot

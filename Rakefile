@@ -524,11 +524,15 @@ namespace :vim do
   end
 
   desc "install base/pathogen/sensible/surround/commentary/replacewithregister/indent/sortmotion/ruby/coffee/pgsql/hdevtools/hoogle"
-  task :favs => [ 'vim:base', 'vim:pathogen', 'vim:sensible', 'vim:surround',                # common
-                  'vim:commentary', 'vim:replacewithregister', 'vim:indent',                 # 
-                  'vim:sortmotion',                                                          #
-                  'vim:ruby', 'vim:coffee', 'vim:pgsql',                                     # ruby 
-                  'vim:hoogle'
+  task :favs => [ 'vim:base', 
+                  'vim:pathogen', 
+                  'vim:sensible', 
+                  'vim:surround', 
+                  'vim:commentary',
+                  'vim:replacewithregister',
+                  'vim:eunuch',
+                  'vim:indent', 
+                  'vim:sortmotion',
                 ]
  
   desc "install vim configuration files"
@@ -550,109 +554,116 @@ namespace :vim do
 
   desc "install vim-sensible"
   task :sensible do
-    sh "cd $HOME/.vim/bundle && git clone git://github.com/tpope/vim-sensible.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git://github.com/tpope/vim-sensible.git"
   end
 
 
   desc "install vim-elm"
   task :elm do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:ElmCast/elm-vim.git"
+    sh "mkdir -p $HOME/.vim/bundle"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:ElmCast/elm-vim.git"
   end
 
   desc "install enuch.vim"
   task :eunuch do
-    sh "cd $HOME/.vim/bundle && git clone git://github.com/tpope/vim-eunuch.git"
+    sh "mkdir -p $HOME/.vim/bundle"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git://github.com/tpope/vim-eunuch.git"
   end
 
   desc "install vim-syntastic"
   task :syntastic do
-    sh "cd $HOME/.vim/bundle && git clone https://github.com/scrooloose/syntastic.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/scrooloose/syntastic.git"
   end
 
   desc "install vim-coffee-script"
   task :coffee do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:kchmck/vim-coffee-script.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:kchmck/vim-coffee-script.git"
   end
 
   desc "install vim-pgsql"
   task :pgsql do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:exu/pgsql.vim.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:exu/pgsql.vim.git"
   end
 
   desc "install vim-hdevtools"
   task :hdevtools do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:bitc/vim-hdevtools.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:bitc/vim-hdevtools.git"
   end
 
   desc "install vim-hoogle"
   task :hoogle do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:Twinside/vim-hoogle.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:Twinside/vim-hoogle.git"
   end
 
   desc "isntall vim-toml"
   task :toml do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:cespare/vim-toml.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:cespare/vim-toml.git"
   end
 
   desc "install vim-purescript"
   task :purescript do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:raichoo/purescript-vim.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:raichoo/purescript-vim.git"
   end
 
   desc "install vim-slime"
   task :slime do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:jpalardy/vim-slime.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:jpalardy/vim-slime.git"
+  end
+
+  desc "install rust.vim"
+  task :rust do
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/rust-lang/rust.vim.git"
   end
 
   desc "install vim-go"
   task :golang do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:fatih/vim-go.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:fatih/vim-go.git"
   end
 
   desc "install vim-ruby"
   task :ruby do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:vim-ruby/vim-ruby.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:vim-ruby/vim-ruby.git"
   end
 
   desc "install ghcmod.vim"
   task :ghcmod do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:eagletmt/ghcmod-vim.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:eagletmt/ghcmod-vim.git"
   end
 
   desc "install vimproc.vim"
   task :vimproc do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:Shougo/vimproc.vim.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:Shougo/vimproc.vim.git"
     sh "cd $HOME/.vim/bundle/vimproc.vim && make"
   end
 
   desc "install surround.vim"
   task :surround do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:tpope/vim-surround.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:tpope/vim-surround.git"
   end
 
   desc "install commentary.vim"
   task :commentary do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:tpope/vim-commentary.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:tpope/vim-commentary.git"
   end
 
   desc "install replace with register"
   task :replacewithregister do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:vim-scripts/ReplaceWithRegister.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:vim-scripts/ReplaceWithRegister.git"
   end
 
   desc "install vim-sort-motion"
   task :sortmotion do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:christoomey/vim-sort-motion.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:christoomey/vim-sort-motion.git"
   end
 
   desc "install vim-indent"
   task :indent do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:michaeljsmith/vim-indent-object.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:michaeljsmith/vim-indent-object.git"
   end
 
   desc "install vim-haskell-indent"
   task :haskell_indent do
-    sh "cd $HOME/.vim/bundle && git clone git@github.com:itchyny/vim-haskell-indent.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:itchyny/vim-haskell-indent.git"
   end
 
 end
