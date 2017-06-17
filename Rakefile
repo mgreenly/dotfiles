@@ -620,6 +620,11 @@ namespace :vim do
     sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:fatih/vim-go.git"
   end
 
+  desc "install typescript-vim"
+  task :typescript do
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/leafgarland/typescript-vim.git"
+  end
+
   desc "install vim-ruby"
   task :ruby do
     sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:vim-ruby/vim-ruby.git"
