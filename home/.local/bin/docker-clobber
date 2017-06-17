@@ -1,9 +1,0 @@
-#!/bin/sh
-
-
-if [ "$#" -eq 1 ]; then
-  docker rm -f $(docker ps -a | grep "$1" | awk "{print \$1}")
-  docker rmi -f $(docker images | grep "$1" | awk "{print \$3}")
-else
-  echo "usage ....."
-fi
