@@ -90,8 +90,8 @@ apt-get -q -y install            \
   libtool                        \
   bison                          \
   libc6-dev                      \
-  libreadline6                   \
-  libreadline6-dev               \
+  libreadline7                   \
+  libreadline-dev                \
   libncurses5-dev                \
   zlib1g                         \
   zlib1g-dev                     \
@@ -135,6 +135,7 @@ apt-get -q -y install            \
   rlwrap                         \
   libcurl3                       \
   ntp                            \
+  dirmngr                        \
   linux-headers-$(uname -r)
 
 
