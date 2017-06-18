@@ -150,6 +150,7 @@ fi
 if [ -d "$HOME/.opt/go" ]; then
   GOROOT="$HOME/.opt/go"
   PATH=$GOROOT/bin:$PATH
+  export GOROOT
 fi
 
 HASKELL_ENVIRONMENT_FILE="$HOME/.ghc/activate"
@@ -162,7 +163,7 @@ if [ -d "$HOME/.opt/idris/bin" ] ; then
 fi
 
 if [ -d "/usr/lib/jvm/java-7-openjdk-amd64/jre" ] ; then
-  export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre"
+  JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre"
 fi
 
 if [ -d "$HOME/.opt/node/bin" ]; then
@@ -173,24 +174,27 @@ if [ -d "$HOME/.cargo/bin" ] ; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-# rvm's scripts are retarded and complain if
-# there path doesn't appear first
+# rvm's scripts are retarded and complain if there path doesn't 
+# first in the list so we source it's script last
 if [ -f "$HOME/.rvm/scripts/rvm" ] ; then
   source "$HOME/.rvm/scripts/rvm"
 fi
 
-export EDITOR=vim
-export GOROOT
-export PATH
-export LD_LIBRARY_PATH
-export CPATH 
+if [ ! -z "$CPATH" ]; then export CPATH; fi
+if [ ! -z "$LD_LIBRARY_PATH" ]; then export LD_LIBRARY_PATH; fi
+if [ ! -z "$GOPATH" ]; then export GOPATH; fi
+if [ ! -z "$JAVAHOME" ]; then export JAVAHOME; fi
 
-. /etc/profile.d/vte.sh
+export PATH
+
+export EDITOR=vim
 
 if [ -e "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER" ]; then
   source "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER"
 fi
-export PATH=$HOME/.cabal/bin:$PATH
+
+# disable the keyboards menukey
+xmodmap -e 'keycode 135 = NoSymbol'
 
 alias dc="docker-compose"
 alias dm="docker-machine"

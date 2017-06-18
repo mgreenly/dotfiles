@@ -102,8 +102,9 @@ namespace :home do
   desc "configure bash"
   task :bash do
     sh "cp -f home/.profile $HOME/.profile"
-    sh "cp -f home/.bash_logout $HOME/.bash_logout"
+    #sh "cp -f home/.bash_logout $HOME/.bash_logout"
     sh "cp -f home/.bashrc $HOME/.bashrc"
+    puts "bingo"
   end
 
   desc "install ruby gem configuration files"
@@ -702,7 +703,7 @@ end
 # RUBY
 #
 desc "install ruby"
-task :ruby => ["home:rubygems", "rvm"] do
+task :ruby => ["home:ruby", "rvm"] do
   ["2.1.0-p0"].each do |ruby|
     if bash %Q[source $HOME/.rvm/scripts/rvm && rvm list | grep '#{ruby}' >> /dev/null]
       puts "ruby-#{ruby} is already installed."
