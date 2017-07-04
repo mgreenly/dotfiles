@@ -558,6 +558,12 @@ namespace :vim do
     sh "cd $HOME/.vim/bundle && git clone --depth=1 git://github.com/tpope/vim-sensible.git"
   end
 
+  desc "install vim-nix"
+  task :nix do
+    sh "mkdir -p $HOME/.vim/bundle"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/LnL7/vim-nix.git"
+  end
+
 
   desc "install vim-elm"
   task :elm do

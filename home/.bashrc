@@ -174,6 +174,11 @@ if [ -e "$HOME/.cargo/env" ] ; then
   source $HOME/.cargo/env
 fi
 
+
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+  source "$HOME/.nix-profile/etc/profile.d/nix.sh" 
+fi
+
 # rvm's scripts are retarded and complain if there path doesn't 
 # first in the list so we source it's script last
 if [ -f "$HOME/.rvm/scripts/rvm" ] ; then
