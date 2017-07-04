@@ -104,6 +104,7 @@ apt-get -q -y install            \
   libxslt1-dev                   \
   libqt4-dev                     \
   libqtgui4                      \
+  libyajl-dev                    \
   postgresql                     \
   postgresql-client              \
   postgresql-contrib             \
