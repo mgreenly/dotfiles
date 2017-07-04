@@ -170,8 +170,8 @@ if [ -d "$HOME/.opt/node/bin" ]; then
   PATH="$HOME/.opt/node/bin:$PATH"
 fi
 
-if [ -d "$HOME/.cargo/bin" ] ; then
-  PATH="$HOME/.cargo/bin:$PATH"
+if [ -e "$HOME/.cargo/env" ] ; then
+  source $HOME/.cargo/env
 fi
 
 # rvm's scripts are retarded and complain if there path doesn't 
@@ -196,3 +196,5 @@ fi
 alias dc="docker-compose"
 alias dm="docker-machine"
 alias ls='ls --color=auto --group-directories-first'
+
+xmodmap -e 'keycode 135 = NoSymbol'
