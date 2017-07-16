@@ -39,10 +39,12 @@ else
   distro="UNKNOWN"
 fi
 
+
+#
+# abort if it's an unknown distribution
+#
 case $distro in
   debian)
-    ;;
-  ubuntu)
     ;;
   *)
     echo "This script is intended to be executed on Debian based distributions."
@@ -137,6 +139,7 @@ apt-get -q -y install            \
   libcurl3                       \
   ntp                            \
   dirmngr                        \
+  default-jdk                    \
   linux-headers-$(uname -r)
 
 
