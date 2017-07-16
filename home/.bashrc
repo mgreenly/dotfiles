@@ -169,7 +169,7 @@ if [ -e "/usr/bin/javac" ]; then
   JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 fi
 
-# if javac isn't installed check if java existgs and use it's path to find the jre.
+# if javac isn't installed check if java exists and use it's path to find the jre.
 if [[ -z $JAVA_HOME ]] && [[ -e "/usr/bin/java" ]]; then
   JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
 fi
