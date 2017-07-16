@@ -162,9 +162,18 @@ if [ -d "$HOME/.opt/idris/bin" ] ; then
   PATH="$HOME/.opt/idris/bin:$PATH"
 fi
 
-if [ -d "/usr/lib/jvm/java-7-openjdk-amd64/jre" ] ; then
-  JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre"
+#
+# check if javac is installed.  If so use it's path to find the jdk.
+#
+if [ -e "/usr/bin/javac" ]; then 
+  JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 fi
+
+# if javac isn't installed check if java existgs and use it's path to find the jre.
+if [[ -z $JAVA_HOME ]] && [[ -e "/usr/bin/java" ]]; then
+  JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:/bin/java::")
+fi
+
 
 if [ -d "$HOME/.opt/node/bin" ]; then
   PATH="$HOME/.opt/node/bin:$PATH"
