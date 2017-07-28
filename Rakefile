@@ -87,16 +87,16 @@ namespace :home do
 
   desc "configure ssh"
   task :ssh => "secrets:decrypt" do
-    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.ssh/ #{DOTFILEDIR}/home/.ssh /home/mgreenly/"
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.ssh/ #{DOTFILEDIR}/home/.ssh $HOME/"
   end
 
   task :gnupg => "secrets:decrypt" do
-    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.gnupg/ #{DOTFILEDIR}/home/.gnupg /home/mgreenly/"
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.gnupg/ #{DOTFILEDIR}/home/.gnupg $HOME/"
   end
 
   desc "aws credentials"
   task :aws do
-    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.aws/ #{DOTFILEDIR}/home/.aws /home/mgreenly/"
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.aws/ #{DOTFILEDIR}/home/.aws $HOME/"
   end
 
   desc "configure bash"
@@ -518,10 +518,16 @@ end
 namespace :vim do
 
   desc "remove vim config"
-  task :clean do
+  task :clobber do
     sh "rm -rf $HOME/.vim"
     sh "rm -rf $HOME/.vimrc"
     sh "rm -rf tmp/"
+  end
+
+
+  desc "remove vim plugins"
+  task :clean do
+    sh "rm -rf $HOME/.vim/bundle/*"
   end
 
   desc "install base/pathogen/sensible/surround/commentary/replacewithregister/indent/sortmotion/ruby/coffee/pgsql/hdevtools/hoogle"
@@ -542,8 +548,9 @@ namespace :vim do
     # hardlink the files from the dotfiles project folder to there installed locations.  Helps to ensure if I mistakenly
     # make changes in the actual file they're reflected in the project folder.
     #
-    sh "rsync -av --delete --link-dest /home/mgreenly/Projects/dotfiles/home/.vim/ /home/mgreenly/Projects/dotfiles/home/.vim/ /home/mgreenly/.vim"
-    sh "link /home/mgreenly/Projects/dotfiles/home/.vimrc /home/mgreenly/.vimrc"
+    #sh "rsync -av --delete $HOME/Projects/dotfiles/home/.vim/ $HOME/.vim"
+    sh "rsync -av --delete --link-dest #{Dir.home}/Projects/dotfiles/home/.vim/ $HOME/Projects/dotfiles/home/.vim/ $HOME/.vim"
+    sh "link $HOME/Projects/dotfiles/home/.vimrc $HOME/.vimrc"
   end
 
   desc "install vim-pathogen"
@@ -555,7 +562,7 @@ namespace :vim do
 
   desc "install vim-sensible"
   task :sensible do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git://github.com/tpope/vim-sensible.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/tpope/vim-sensible.git"
   end
 
   desc "install vim-nix"
@@ -574,7 +581,7 @@ namespace :vim do
   desc "install enuch.vim"
   task :eunuch do
     sh "mkdir -p $HOME/.vim/bundle"
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git://github.com/tpope/vim-eunuch.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/tpope/vim-eunuch.git"
   end
 
   desc "install vim-syntastic"
@@ -634,7 +641,8 @@ namespace :vim do
 
   desc "install vim-ruby"
   task :ruby do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:vim-ruby/vim-ruby.git"
+    #sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:vim-ruby/vim-ruby.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/vim-ruby/vim-ruby.git"
   end
 
   desc "install ghcmod.vim"
@@ -650,27 +658,27 @@ namespace :vim do
 
   desc "install surround.vim"
   task :surround do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:tpope/vim-surround.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/tpope/vim-surround.git"
   end
 
   desc "install commentary.vim"
   task :commentary do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:tpope/vim-commentary.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/tpope/vim-commentary.git"
   end
 
   desc "install replace with register"
   task :replacewithregister do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:vim-scripts/ReplaceWithRegister.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/vim-scripts/ReplaceWithRegister.git"
   end
 
   desc "install vim-sort-motion"
   task :sortmotion do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:christoomey/vim-sort-motion.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/christoomey/vim-sort-motion.git"
   end
 
   desc "install vim-indent"
   task :indent do
-    sh "cd $HOME/.vim/bundle && git clone --depth=1 git@github.com:michaeljsmith/vim-indent-object.git"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/michaeljsmith/vim-indent-object.git"
   end
 
   desc "install vim-haskell-indent"
