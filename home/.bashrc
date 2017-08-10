@@ -153,6 +153,12 @@ if [ -d "$HOME/.opt/go" ]; then
   export GOROOT
 fi
 
+if [ -e "$HOME/Projects/go" ]; then
+  GOPATH=$HOME/Projects/go
+  GOBIN=$GOPATH/bin
+  PATH=$GOBIN:$PATH
+fi
+
 HASKELL_ENVIRONMENT_FILE="$HOME/.ghc/activate"
 if [ -f "$HASKELL_ENVIRONMENT_FILE" ]; then
   source "$HASKELL_ENVIRONMENT_FILE"
@@ -187,6 +193,7 @@ fi
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
   source "$HOME/.nix-profile/etc/profile.d/nix.sh" 
 fi
+
 
 # rvm's scripts are retarded and complain if there path doesn't 
 # first in the list so we source it's script last

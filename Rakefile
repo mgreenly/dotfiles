@@ -225,17 +225,21 @@ namespace :rust do
   end
 end
 
+
 namespace :golang do
+  GO_VERSION = "1.8.3"
+  GO_OS = "linux"
+  GO_ARCH = "amd64"
+
   desc "remove golang"
   task :clean do
     sh "rm -f #{TMPDIR}/go*.tar.gz"
     sh "rm -rf $HOME/.opt/go"
   end
 
-  desc "install golang"
+  desc "install golang #{GO_VERSION}"
   task :install do
-    version, os, arch = "1.8.3", "linux", "amd64"
-    dirname = "go#{version}.#{os}-#{arch}"
+    dirname = "go#{GO_VERSION}.#{GO_OS}-#{GO_ARCH}"
     tarfile = [dirname, "tar.gz"].join(".")
     tarpath = File.join(TMPDIR, tarfile)
     unless File.exists?(tarpath)
@@ -246,6 +250,7 @@ namespace :golang do
     end
   end
 end
+
 
 namespace :purescript do
   desc "remove purescript files"
