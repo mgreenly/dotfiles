@@ -24,10 +24,11 @@ highlight CursorColumn   ctermfg=none  ctermbg=235   cterm=none
 "" The current cursor's line.  
 highlight CursorLine     ctermfg=none  ctermbg=235   cterm=none
 "" The current cursor's line in the number row.
-highlight CursorLineNr   ctermfg=239  ctermbg=235   cterm=none
+highlight CursorLineNr   ctermfg=239   ctermbg=235   cterm=none
 "" The number row
-highlight LineNr         ctermfg=239  ctermbg=none   cterm=none
-
+highlight LineNr         ctermfg=239   ctermbg=none  cterm=none
+"" color used for the right margine marker
+highlight ColorColumn    ctermfg=none  ctermbg=235
 
 highlight Comment        ctermfg=239 ctermbg=none cterm=none
 highlight SpecialComment ctermfg=028 ctermbg=none cterm=none
