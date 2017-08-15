@@ -19,7 +19,8 @@ set number                    " show linenumber
 set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
 set nolist                    " show trailing white space
-"" set nomodeline                " don't want editor specific commands in files
+set colorcolumn=96            " set the right margin marker
+set modeline                  " enable editor specific commands
 
 syntax on
 filetype on
@@ -82,3 +83,6 @@ command! -complete=file -nargs=* ReadStackBuild call s:RunShellCommand('stack bu
 
 "" inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
 "" inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
+
+map <leader>c :exe '!clear && rubocop -a'<CR>
+map <leader>t :exe '!clear && rake test -a'<CR>
