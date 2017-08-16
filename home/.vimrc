@@ -18,8 +18,10 @@ set laststatus=2              " show status line
 set number                    " show linenumber
 set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
-set nolist                    " show trailing white space
-set colorcolumn=96            " set the right margin marker
+set list
+set listchars=tab:··,trail:⎵  ""show tab and trailing whitespace
+""set listchars=eol:⏎,tab:··,trail:␠,nbsp:⎵
+set colorcolumn=120            " set the right margin marker
 set modeline                  " enable editor specific commands
 
 syntax on
@@ -84,5 +86,16 @@ command! -complete=file -nargs=* ReadStackBuild call s:RunShellCommand('stack bu
 "" inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
 "" inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 
-map <leader>c :exe '!clear && rubocop -a'<CR>
-map <leader>t :exe '!clear && rake test -a'<CR>
+"
+"" run rubocoap on current file
+map <leader>c :exe '!clear && rubocop -a '.@%<CR>
+"" run rubocop on all files
+map <leader>C :exe '!clear && rubocop -a'<CR>
+
+"" run current test file
+map <leader>t :exe '!clear && ruby -Ilib:test '.@%<CR>
+"" run all tests
+map <leader>T :exe '!clear && rake test'<CR>
+
+
+""map <leader>T :exe '!clear && rake test TEST='.@%<CR>
