@@ -93,9 +93,12 @@ map <leader>c :exe '!clear && rubocop -a '.@%<CR>
 map <leader>C :exe '!clear && rubocop -a'<CR>
 
 "" run current test file
-map <leader>t :exe '!clear && ruby -Ilib:test '.@%<CR>
+""map <leader>t :exe '!clear && ruby -Ilib:test '.@%<CR>
 "" run all tests
-map <leader>T :exe '!clear && rake test'<CR>
+map <leader>T :exe '!clear && bundle exec rake minitest'<CR>
+
+map <leader>t :exe '!clear && bundle exec ruby -Ilib:test '.@%<CR>
 
 
 ""map <leader>T :exe '!clear && rake test TEST='.@%<CR>
+"" bundle exec rake -- minitest --filename activities/setup/git_deploy_test.rb
