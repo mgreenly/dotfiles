@@ -1,9 +1,6 @@
 setlocal tabstop=4
 setlocal shiftwidth=4
 
-"
-" set the leader key
-let mapleader=","
 
 "
 " assign go commands to keys
@@ -25,8 +22,8 @@ let mapleader=","
 map <leader>c :execute '!clear && go clean -i -x $( expr %:h : "[^/]*/\(.*\)" )'<CR>
 map <leader>e :execute '!clear && go env'<CR>
 map <leader>f :execute '!clear && gofmt -s -w ./'<CR>
+map <leader>i :execute '!clear && goimports -w $(expr %)'<CR>
 map <leader>g :execute '!clear && go get $( expr %:h : "[^/]*/\(.*\)" )'<CR>
-map <leader>i :execute '!clear && go install -v $( expr %:h : "[^/]*/\(.*\)" )'<CR>
-map <leader>r :execute '!clear && go run %'<CR>
+map <leader>r :execute '!clear && go run $(expr %)'<CR>
 map <leader>t :execute '!clear && go test $( expr %:h : "[^/]*/\(.*\)" )'<CR>
 map <leader>v :execute '!clear && go version'<CR>
