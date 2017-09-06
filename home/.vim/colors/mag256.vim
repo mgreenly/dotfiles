@@ -38,10 +38,9 @@ highlight String         ctermfg=038 ctermbg=none cterm=none
 highlight Float          ctermfg=038 ctermbg=none cterm=none
 highlight Character      ctermfg=038 ctermbg=none cterm=none
 highlight Todo           ctermfg=052 ctermbg=none cterm=none
+highlight hsUnit         ctermfg=1   ctermbg=none cterm=none
 
-highlight hsUnit           ctermfg=1 ctermbg=none cterm=none
 
-"
 ""hi StatusLine            ctermfg=249  ctermbg=232 cterm=none
 ""hi StatusLineNC          ctermfg=249  ctermbg=249 cterm=none
 ""highlight Normal         ctermfg=067 ctermbg=none cterm=none

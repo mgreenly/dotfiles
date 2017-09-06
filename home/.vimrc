@@ -24,10 +24,14 @@ set listchars=tab:··,trail:⎵  ""show tab and trailing whitespace
 set colorcolumn=120            " set the right margin marker
 set modeline                  " enable editor specific commands
 
+set ttyfast
+set lazyredraw
+
 syntax on
 filetype on
 filetype indent on
 filetype plugin on
+
 
 "" disable 'save and quit' because it's to close to 'suspend' (<C-z>)
 map <S-z><S-z> <Nop>

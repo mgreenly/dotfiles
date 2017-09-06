@@ -553,10 +553,8 @@ namespace :vim do
     #
     # hardlink the files from the dotfiles project folder to there installed locations.  Helps to ensure if I mistakenly
     # make changes in the actual file they're reflected in the project folder.
-    #
-    #sh "rsync -av --delete $HOME/Projects/dotfiles/home/.vim/ $HOME/.vim"
-    sh "rsync -av --delete --link-dest #{Dir.home}/Projects/dotfiles/home/.vim/ $HOME/Projects/dotfiles/home/.vim/ $HOME/.vim"
-    sh "link $HOME/Projects/dotfiles/home/.vimrc $HOME/.vimrc"
+    sh "rsync -av --delete --link-dest #{Dir.pwd}/home/.vim/ #{Dir.pwd}/home/.vim/ $HOME/.vim"
+    sh "link #{Dir.pwd}/home/.vimrc $HOME/.vimrc"
   end
 
   desc "install vim-pathogen"
