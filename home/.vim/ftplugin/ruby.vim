@@ -11,6 +11,8 @@ map <leader>c :exe '!clear && rubocop -a '.@%<CR>
 map <leader>C :exe '!clear && rubocop -a'<CR>
 
 "" run tests on current file
-map <leader>t :exe '!clear && bundle exec ruby -Ilib:test '.@%<CR>
+""map <leader>t :exe '!clear && bundle exec ruby -Ilib:test '.@%<CR>
+map <leader>T :exe '!clear && bundle exec rake minitest -- --filename='.@%<CR>
 "" run tests on all files
-map <leader>T :exe '!clear && bundle exec rake test'<CR>
+""map <leader>T :exe '!clear && bundle exec rake test'<CR>
+map <leader>T :exe '!clear && bundle exec rake minitest'<CR>
