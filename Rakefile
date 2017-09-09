@@ -1,12 +1,13 @@
 require 'etc'
 require 'fileutils'
 require 'pathname'
+require 'tmpdir'
 
 # this is a comment in 
 
 DOTFILEDIR = File.dirname(File.expand_path(__FILE__))
 
-TMPDIR = File.join(Dir.home,"tmp")
+TMPDIR = Dir.tmpdir #File.join(Dir.home,"tmp")
 
 USER_BIN = File.join(Dir.home, "bin")
 
@@ -225,9 +226,14 @@ namespace :rust do
   end
 end
 
+namespace :home do
+  task :opt do
+    sh "mkdir -p #{File.join(Dir.home, '.opt')}"  #command
+  end
+end
+
 
 namespace :golang do
-  #GO_VERSION = "1.8.3"
   GO_VERSION = "1.9"
   GO_OS = "linux"
   GO_ARCH = "amd64"
@@ -239,7 +245,7 @@ namespace :golang do
   end
 
   desc "install golang #{GO_VERSION}"
-  task :install do
+  task :install => ['home:opt'] do
     dirname = "go#{GO_VERSION}.#{GO_OS}-#{GO_ARCH}"
     tarfile = [dirname, "tar.gz"].join(".")
     tarpath = File.join(TMPDIR, tarfile)
