@@ -140,6 +140,7 @@ apt-get -q -y install            \
   ntp                            \
   dirmngr                        \
   default-jdk                    \
+  python-pip                     \
   btrfs-progs                    \
   linux-headers-$(uname -r)
 
