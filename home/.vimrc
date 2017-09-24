@@ -32,6 +32,10 @@ filetype on
 filetype indent on
 filetype plugin on
 
+"" disable F1 help
+nmap <F1> :echo<CR>
+imap <F1> <C-o>:echo<CR>
+
 
 "" disable 'save and quit' because it's to close to 'suspend' (<C-z>)
 map <S-z><S-z> <Nop>
