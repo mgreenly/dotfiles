@@ -1,12 +1,13 @@
 require 'etc'
 require 'fileutils'
 require 'pathname'
+require 'tmpdir'
 
 # this is a comment in 
 
 DOTFILEDIR = File.dirname(File.expand_path(__FILE__))
 
-TMPDIR = File.join(Dir.home,"tmp")
+TMPDIR = Dir.tmpdir
 
 USER_BIN = File.join(Dir.home, "bin")
 
@@ -83,6 +84,10 @@ namespace :home do
       puts "linking  #{dst}"
       system "rm -f #{dst} && ln #{src} #{dst}"
     end
+  end
+
+  task :opt do
+    sh "mkdir -p #{File.join(Dir.home, '.opt')}"  #command
   end
 
   desc "configure ssh"
@@ -226,8 +231,8 @@ namespace :rust do
 end
 
 
+
 namespace :golang do
-  #GO_VERSION = "1.8.3"
   GO_VERSION = "1.9"
   GO_OS = "linux"
   GO_ARCH = "amd64"
@@ -239,7 +244,7 @@ namespace :golang do
   end
 
   desc "install golang #{GO_VERSION}"
-  task :install do
+  task :install => ['home:opt'] do
     dirname = "go#{GO_VERSION}.#{GO_OS}-#{GO_ARCH}"
     tarfile = [dirname, "tar.gz"].join(".")
     tarpath = File.join(TMPDIR, tarfile)
@@ -409,46 +414,19 @@ end
 # AWS
 #
 namespace "aws" do
-  src_dir       = TMPDIR
-  bin_dir       = File.join(Dir.home, ".opt")
-
-  #
-  # CLI
-  #
   namespace "cli" do
-    bundle_file = "awscli-bundle.zip"
-    bundle_dir  = File.basename(bundle_file,".zip")
-    bundle_url  = "https://s3.amazonaws.com/aws-cli/#{bundle_file}"
-    bundle_path = File.join(src_dir, bundle_file)
-    old_dir = Dir.pwd
-
     desc "remove aws command line interface"
     task :clean do
-      sh "rm -rf #{src_dir}/awscli*"
-      sh "rm -rf #{bin_dir}/awscli*"
+      sh "pip uninstall -y awscli"
     end
 
     desc "install aws command line interface"
-    task :install => [:src_dir] do
+    task :install do
       begin
-        sh "mkdir -p #{src_dir}" unless File.exists?(src_dir)
-        Dir.chdir src_dir
-        unless File.exists?(bundle_file)
-          sh "curl -L #{bundle_url} > #{bundle_file}"
-        end
-        unless Dir.exists?(File.basename(bundle_dir))
-          sh "unzip #{bundle_file}"
-        end
-        unless Dir.exists?(File.join(bin_dir, "aws"))
-          sh "./awscli-bundle/install -i #{bin_dir}/awscli"
-        end
-        puts %Q{use ". #{bin_dir}/awscli/bin/activate" to add tools to env}
-      ensure
-        Dir.chdir old_dir
+        sh "pip install awscli --upgrade --user"
       end
     end
   end
-
 end
 
 
