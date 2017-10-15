@@ -210,10 +210,6 @@ export PATH
 
 export EDITOR=vim
 
-if [ -e "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER" ]; then
-  source "/home/mgreenly/Projects/dotfiles/secrets/aws/$USER"
-fi
-
 alias dc="docker-compose"
 alias dm="docker-machine"
 alias ls='ls --color=auto --group-directories-first'
