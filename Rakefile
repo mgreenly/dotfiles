@@ -233,7 +233,7 @@ end
 
 
 namespace :golang do
-  GO_VERSION = "1.9"
+  GO_VERSION = "1.9.1"
   GO_OS = "linux"
   GO_ARCH = "amd64"
 
