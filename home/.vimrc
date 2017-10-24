@@ -55,6 +55,7 @@ noremap <C-S> :call TrimWhiteSpace()<CR>
 autocmd BufWritePre *.hs :call TrimWhiteSpace()
 autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
+autocmd BufWritePre *.go :call TrimWhiteSpace()
 
 """" slime config
 let g:slime_target = "tmux"
