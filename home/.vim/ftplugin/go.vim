@@ -2,6 +2,7 @@ set tabstop=4
 set shiftwidth=4
 set noexpandtab
 set nolist!
+
 ""set listchars=trail:⎵
 
 map <leader>b :execute '!clear && go build -v'<CR>
