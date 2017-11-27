@@ -143,6 +143,7 @@ namespace :node do
 
   desc "install node"
   task :install => [:tmpdir] do
+    # TODO: check to see if command exists if so skip `command -v npm`
     next if File.exists?(File.join(Dir.home, '.opt', 'node'))
     #node_ver = "6.11.2"
     node_ver = "8.2.1"
@@ -254,6 +255,18 @@ namespace :golang do
     unless File.exists?(File.join(Dir.home,".opt", "go"))
       sh "cd $HOME/.opt && tar -xvf #{tarpath}"
     end
+  end
+end
+
+
+namespace :typescript do
+  desc "remove typescript"
+  task :clean do
+    sh "npm uninstall -g typescript"
+  end
+  desc "install typescript"
+  task :install => ['node:install'] do
+    sh "npm install -g typescript"
   end
 end
 
@@ -683,6 +696,7 @@ end
 #
 desc "install rvm"
 task :rvm => [ "home:bash" ] do
+  # TODO use this: command -v npm 
   if Kernel.system('which rvm >> /dev/null')
     puts "rvm already installed"
   else
