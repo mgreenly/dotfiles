@@ -9,6 +9,8 @@ DOTFILEDIR = File.dirname(File.expand_path(__FILE__))
 
 TMPDIR = Dir.tmpdir
 
+puts "TMPDIR=#{TMPDIR}"
+
 USER_BIN = File.join(Dir.home, "bin")
 
 def backup(src)
@@ -231,11 +233,11 @@ namespace :rust do
   end
 end
 
-
+#go1.9.1.darwin-amd64.tar.gz
 
 namespace :golang do
-  GO_VERSION = "1.9.1"
-  GO_OS = "linux"
+  GO_VERSION = "1.9.2"
+  GO_OS = `uname`.strip == 'Darwin' ? 'darwin' : "linux"
   GO_ARCH = "amd64"
 
   desc "remove golang"
@@ -246,11 +248,13 @@ namespace :golang do
 
   desc "install golang #{GO_VERSION}"
   task :install => ['home:opt'] do
+    baseurl = "https://storage.googleapis.com/golang/"
     dirname = "go#{GO_VERSION}.#{GO_OS}-#{GO_ARCH}"
     tarfile = [dirname, "tar.gz"].join(".")
     tarpath = File.join(TMPDIR, tarfile)
+    fullurl = "#{baseurl}#{tarfile}"
     unless File.exists?(tarpath)
-      sh "curl -L http://golang.org/dl/#{tarfile} > #{tarpath}"
+      sh "curl -L #{fullurl} > #{tarpath}"
     end
     unless File.exists?(File.join(Dir.home,".opt", "go"))
       sh "cd $HOME/.opt && tar -xvf #{tarpath}"
