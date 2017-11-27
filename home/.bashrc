@@ -214,4 +214,6 @@ alias dc="docker-compose"
 alias dm="docker-machine"
 alias ls='ls --color=auto --group-directories-first'
 
+export GOSRC=$(echo $GOPATH | cut -d: -f1)/src
+
 xmodmap -e 'keycode 135 = NoSymbol'
