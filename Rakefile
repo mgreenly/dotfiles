@@ -572,6 +572,12 @@ namespace :vim do
   end
 
 
+  desc "install vim-nerdtree"
+  task :nerdtree do
+    sh "mkdir -p $HOME/.vim/bundle"
+    sh "cd $HOME/.vim/bundle && git clone --depth=1 https://github.com/scrooloose/nerdtree.git"
+  end
+
   desc "install vim-elm"
   task :elm do
     sh "mkdir -p $HOME/.vim/bundle"

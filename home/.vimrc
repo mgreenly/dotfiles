@@ -106,5 +106,7 @@ map <leader>t :exe '!clear && ruby -Ilib:test '.@%<CR>
 "" run all tests
 map <leader>T :exe '!clear && rake test'<CR>
 
+"" show/hide nerdtree
+map <leader>n :NERDTreeToggle<CR>
 
 ""map <leader>T :exe '!clear && rake test TEST='.@%<CR>
