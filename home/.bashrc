@@ -153,10 +153,14 @@ if [ -d "$HOME/.opt/go" ]; then
   export GOROOT
 fi
 
-if [ -e "$HOME/Projects/go" ]; then
-  GOPATH=$HOME/Projects/go
-  GOBIN=$GOPATH/bin
-  PATH=$GOBIN:$PATH
+if [ -e "$HOME/go" ]; then
+  GOPATH=$HOME/go
+  PATH=$HOME/go/bin:$PATH
+fi
+
+if [ -e "$HOME/git" ]; then
+  GOPATH=$GOPATH:$HOME/git
+  PATH=$HOME/git/bin:$PATH
 fi
 
 HASKELL_ENVIRONMENT_FILE="$HOME/.ghc/activate"
@@ -212,8 +216,16 @@ export EDITOR=vim
 
 alias dc="docker-compose"
 alias dm="docker-machine"
+alias kc="kubectl"
 alias ls='ls --color=auto --group-directories-first'
 
-export GOSRC=$(echo $GOPATH | cut -d: -f1)/src
+KUBECTL_ENV_FILE=$HOME/git/secrets/envs/test.k8s.logic-refinery.io
+if [ -f "$KUBECTL_ENV_FILE" ]; then
+  source "$KUBECTL_ENV_FILE"
+fi
 
+export GOSRC=$(echo $GOPATH | cut -d: -f1)/src
+export MONOREPO=$(echo $GOSRC)/github.com/logic-refinery
 xmodmap -e 'keycode 135 = NoSymbol'
+
+
