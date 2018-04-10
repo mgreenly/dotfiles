@@ -3,7 +3,7 @@
 tmux has-session -t development
 if [ $? != 0 ]; then
 tmux new-session -s development -n Notes -d
-tmux send-keys -t development 'vim ~/Documents/notes.txt' C-m    #
+tmux send-keys -t development 'vim $DROPBOX_DIR/documents/notes.txt' C-m    #
 tmux new-window -n Editor
 tmux send-keys -t development 'vim' C-m
 tmux new-window -n Terminal
