@@ -97,6 +97,11 @@ namespace :home do
     sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.ssh/ #{DOTFILEDIR}/home/.ssh $HOME/"
   end
 
+  desc "configure $HOME/local/bin"
+  task :localbin => "secrets:decrypt" do
+    sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.local/bin/ #{DOTFILEDIR}/home/.local/bin $HOME/.local/"
+  end
+
   task :gnupg => "secrets:decrypt" do
     sh  "rsync -av -L --delete --link-dest #{DOTFILEDIR}/home/.gnupg/ #{DOTFILEDIR}/home/.gnupg $HOME/"
   end
