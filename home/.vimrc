@@ -20,8 +20,7 @@ set numberwidth=5             " set the number width
 set relativenumber            " use relative instead of absolute line numbers
 set list
 set listchars=tab:··,trail:⎵  ""show tab and trailing whitespace
-""set listchars=eol:⏎,tab:··,trail:␠,nbsp:⎵
-set colorcolumn=120            " set the right margin marker
+set colorcolumn=120           " set the right margin marker
 set modeline                  " enable editor specific commands
 
 set ttyfast
@@ -57,9 +56,6 @@ autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
 autocmd BufWritePre *.go :call TrimWhiteSpace()
 
-"""" slime config
-let g:slime_target = "tmux"
-
 """" Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -92,21 +88,6 @@ endfunction
 command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>)
 command! -complete=file -nargs=* ReadStackBuild call s:RunShellCommand('stack build --force-dirty --fast')
 
-"" inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
-"" inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
-
-"
-"" run rubocoap on current file
-map <leader>c :exe '!clear && rubocop -a '.@%<CR>
-"" run rubocop on all files
-map <leader>C :exe '!clear && rubocop -a'<CR>
-
-"" run current test file
-map <leader>t :exe '!clear && ruby -Ilib:test '.@%<CR>
-"" run all tests
-map <leader>T :exe '!clear && rake test'<CR>
 
 "" show/hide nerdtree
 map <leader>n :NERDTreeToggle<CR>
-
-""map <leader>T :exe '!clear && rake test TEST='.@%<CR>

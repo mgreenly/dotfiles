@@ -2,3 +2,5 @@
 .*.sw?
 *.log
 /vendor/**/.git
+.rake_tasks~
+.vimrc

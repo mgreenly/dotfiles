@@ -149,7 +149,8 @@ namespace :node do
     next if File.exists?(File.join(Dir.home, '.opt', 'node'))
     #node_ver = "6.11.2"
     #node_ver = "8.2.1"
-    node_ver = "9.4.0"
+    #node_ver = "9.4.0"
+    node_ver = "9.5.0"
     unless File.exists?("#{TMPDIR}/node-v#{node_ver}.tar.gz")
       sh "curl -s http://nodejs.org/dist/v#{node_ver}/node-v#{node_ver}.tar.gz > #{TMPDIR}/node-v#{node_ver}.tar.gz"
     end
@@ -237,7 +238,7 @@ end
 #go1.9.1.darwin-amd64.tar.gz
 
 namespace :golang do
-  GO_VERSION = "1.10"
+  GO_VERSION = "1.10.3"
   GO_OS = `uname`.strip == 'Darwin' ? 'darwin' : "linux"
   GO_ARCH = "amd64"
 

@@ -148,20 +148,10 @@ if [ -d "$HOME/.opt/gauche/bin" ] ; then
 fi
 
 if [ -d "$HOME/.opt/go" ]; then
-  GOROOT="$HOME/.opt/go"
-  PATH=$GOROOT/bin:$PATH
-  export GOROOT
+  export PATH=$HOME/.opt/go/bin:$PATH
+  export GOPATH=$HOME/.go
 fi
 
-if [ -e "$HOME/go" ]; then
-  GOPATH=$HOME/go
-  PATH=$HOME/go/bin:$PATH
-fi
-
-if [ -e "$HOME/git" ]; then
-  GOPATH=$GOPATH:$HOME/git
-  PATH=$HOME/git/bin:$PATH
-fi
 
 HASKELL_ENVIRONMENT_FILE="$HOME/.ghc/activate"
 if [ -f "$HASKELL_ENVIRONMENT_FILE" ]; then
@@ -194,9 +184,9 @@ if [ -e "$HOME/.cargo/env" ] ; then
 fi
 
 
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-  source "$HOME/.nix-profile/etc/profile.d/nix.sh" 
-fi
+#if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+#  source "$HOME/.nix-profile/etc/profile.d/nix.sh" 
+#fi
 
 
 # rvm's scripts are retarded and complain if there path doesn't 
@@ -224,8 +214,28 @@ if [ -f "$KUBECTL_ENV_FILE" ]; then
   source "$KUBECTL_ENV_FILE"
 fi
 
+target=/usr/lib/dart/bin
+if [ -d "$target" ]; then
+  PATH="$target:$HOME/.pub-cache/bin:$PATH"
+fi
+
 export GOSRC=$(echo $GOPATH | cut -d: -f1)/src
 export MONOREPO=$(echo $GOSRC)/github.com/logic-refinery
 xmodmap -e 'keycode 135 = NoSymbol'
 
+export DROPBOX_DIR=$HOME/Documents/Dropbox
 
+#if [ -f "${HOME}/.gpg-agent-info" ]; then
+#     source "${HOME}/.gpg-agent-info"
+#       export GPG_AGENT_INFO
+#       export SSH_AUTH_SOCK
+#       export SSH_AGENT_PID
+#else
+#    eval $( gpg-agent --daemon --write-env-file ~/.gpg-agent-info )
+#fi
+
+#alias vim=nvim
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi
