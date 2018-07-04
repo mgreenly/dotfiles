@@ -4,7 +4,8 @@ set shiftwidth=3
 set softtabstop=3
 set expandtab!
 
-map <leader>b :GoBuild<CR>
+"map <leader>b :GoBuild<CR>
+map <leader>b :execute '!clear && go build'<CR>
 map <leader>c :execute '!clear && go clean -i -x $( expr %:h : "[^/]*/\(.*\)" )'<CR>
 map <leader>t :GoTest<CR>
 map <leader>T :GoTestFunc<CR>
