@@ -148,7 +148,7 @@ if [ -d "$HOME/.opt/gauche/bin" ] ; then
 fi
 
 if [ -d "$HOME/.opt/go" ]; then
-  export PATH=$HOME/.opt/go/bin:$PATH
+  export PATH=$HOME/.opt/go/bin:$HOME/.go/bin:$PATH
   export GOPATH=$HOME/.go
 fi
 
@@ -239,3 +239,5 @@ export DROPBOX_DIR=$HOME/Documents/Dropbox
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
 fi
+
+# . /home/mgreenly/.nix-profile/etc/profile.d/nix.sh

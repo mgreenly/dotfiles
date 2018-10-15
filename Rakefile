@@ -243,7 +243,7 @@ end
 #go1.9.1.darwin-amd64.tar.gz
 
 namespace :golang do
-  GO_VERSION = "1.10.3"
+  GO_VERSION = "1.11"
   GO_OS = `uname`.strip == 'Darwin' ? 'darwin' : "linux"
   GO_ARCH = "amd64"
 

@@ -1,6 +1,8 @@
-.DS_Store
-.*.sw?
 *.log
-/vendor/**/.git
+.*.sw?
+.DS_Store
 .rake_tasks~
 .vimrc
+/.secrets/**/*
+/tags
+/vendor/**/.git
