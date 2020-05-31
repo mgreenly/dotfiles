@@ -1,0 +1,75 @@
+########################
+# SHIFT CHORDS
+########################
+
+# quit
+super + space; shift + Escape
+  bspc quit
+
+# send node to the given desktop
+super + space; shift + {1-9}
+  bspc node -d '^{1-9}'
+
+# reload config
+super + space; shift + r
+  pkill -USR1 -x sxhkd
+
+# close node
+super + space; shift + w
+  bspc node -c
+
+########################
+# CHORDS
+########################
+
+# quit bspwm
+super + space; Escape
+  noop
+
+ # focus on desktop
+super + space; {1-9}
+   bspc desktop -f {1-9}
+
+# launch terminal
+super + space; b
+  google-chrome
+
+# move the node in the given direction
+super + space; {h,j,k,l}
+  bspc node -s {west,south,north,east}
+
+# program menu
+super + space; m
+  dmenu_run
+
+# launch terminal
+super + space; t
+  gnome-terminal
+
+########################
+# KEYS
+########################
+
+# fullscreen
+super + f
+   bspc node -t fullscreen
+
+# focus the node in the given direction
+super + {h,j,k,l}
+  bspc node -f {west,south,north,east}
+
+# toggle monocule mode
+super + m
+  bspc desktop -l next
+
+# focus the next node in the current desktop
+super + n
+  bspc node -f next.local
+
+# focus the prev node in the current desktop
+super + p
+  bspc node -f prev.local
+
+# tiled
+super + t
+   bspc node -t tiled
