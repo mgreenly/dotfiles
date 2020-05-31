@@ -1,0 +1,137 @@
+#!/usr/bin/ruby
+require 'pp'
+require 'erb'
+
+HEADER =ERB.new(
+<<-HTML
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="styles/ir-black.css">
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style media = "all">
+      body {
+        background-color: #000;
+        color: #DCDCDC;
+        font-family: 'Lato', serif;
+      }
+      hr {
+        border-color: red;
+      }
+      .header {
+        height: 10%;
+        position: relative;
+        border: 0;
+      }
+      .container {
+        height: 60%;
+        position: relative;
+        border: 0;
+      }
+      .footer {
+        height: 30%;
+        position: relative;
+        border: 0;
+      }
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .description {
+        font-size: 133%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">&nbsp;</div>
+    <div class="container">
+      <div class="center">
+HTML
+)
+
+FOOTER =ERB.new(
+<<-HTML
+      </div>
+    </div>
+    <div class="footer">&nbsp;</div>
+  </body>
+  <script>
+    $(document).on("keypress", function (e) {
+      switch(e.which) {
+        case 72:  // h
+        case 104: // H
+          window.location.href = "<%= prevfile %>";
+          break;
+        case 74:  // j
+        case 106: // J
+          window.location.href = "<%= prevfile %>";
+          break;
+        case 75:  // k
+        case 107: // K
+          window.location.href = "<%= nextfile %>";
+          break;
+        case 76:  // l
+        case 108: // L
+          window.location.href = "<%= nextfile %>";
+          break;
+      }
+    });
+  </script>
+</html>
+HTML
+)
+
+unless ARGV.count == 2
+  abort "usage: mkslides DIRIN DIROUT"
+end
+
+dirin = ARGV[0]
+dirout = ARGV[1]
+
+filesin = Dir["#{dirin}/**/*.lhs"].sort
+
+filesin.each_with_index do |filename, index|
+  outfilename = File.join(dirout, File.basename(filename, '.lhs') + '.html')
+  prevfile = filesin[index - 1] if index > 0
+  nextfile = filesin[index + 1] if index <= (filesin.count - 1)
+  prevfile = filename if prevfile.nil?
+  nextfile = filename if nextfile.nil?
+  prevfile = File.basename(prevfile, '.lhs') + '.html'
+  nextfile = File.basename(nextfile, '.lhs') + '.html'
+
+
+  puts "this = #{outfilename}"
+  puts "prev = #{prevfile}"
+  puts "next = #{nextfile}"
+
+  File.open(outfilename, 'w') { |outfile|
+
+    outfile.puts HEADER.result(binding)
+
+    chunks = File.readlines(filename).chunk(&:itself).flat_map{ |lines|
+      lines.first =~ /\A\s*\Z/ ? lines.first : lines.last
+    }.chunk {|line|
+      line.start_with?('>') ? :code : :html
+    }.each { |chunk|
+
+      if chunk.first == :code
+        outfile.puts '<pre><code class="language-haskell">'
+        chunk.last.each { |line| outfile.puts line.sub(/^> /, '') }
+        outfile.puts "</code></pre>"
+      else
+        chunk.last.each { |line| outfile.puts line }
+        outfile.puts("<hr />") unless chunk.last == ["\n"]
+      end
+    }
+    outfile.puts FOOTER.result(binding)
+  }
+
+
+end
+
+
