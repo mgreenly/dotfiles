@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 require 'pp'
 require 'erb'
+require 'fileutils'
 
 HEADER =ERB.new(
 <<-HTML
@@ -8,7 +9,7 @@ HEADER =ERB.new(
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="styles/ir-black.css">
+    <link rel="stylesheet" href="style/ir-black.css">
     <script src="js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <style media = "all">
@@ -62,6 +63,7 @@ FOOTER =ERB.new(
   </body>
   <script>
     $(document).on("keypress", function (e) {
+      console.log(e.which);
       switch(e.which) {
         case 72:  // h
         case 104: // H
@@ -92,6 +94,18 @@ end
 
 dirin = ARGV[0]
 dirout = ARGV[1]
+
+jsfile    ='highlight.pack.js'
+stylefile ='ir-black.css'
+
+jsdir     = File.join(dirout, 'js')
+styledir  = File.join(dirout, 'style')
+
+FileUtils.mkdir_p(jsdir)
+FileUtils.mkdir_p(styledir)
+
+FileUtils.cp(File.join(Dir.home, '.local/share/mkslides/js', jsfile), File.join(dirout, 'js', jsfile))
+FileUtils.cp(File.join(Dir.home, '.local/share/mkslides/style', stylefile), File.join(dirout, 'style', stylefile))
 
 filesin = Dir["#{dirin}/**/*.lhs"].sort
 
@@ -125,7 +139,7 @@ filesin.each_with_index do |filename, index|
         outfile.puts "</code></pre>"
       else
         chunk.last.each { |line| outfile.puts line }
-        outfile.puts("<hr />") unless chunk.last == ["\n"]
+        # outfile.puts("<hr />") unless chunk.last == ["\n"]
       end
     }
     outfile.puts FOOTER.result(binding)
