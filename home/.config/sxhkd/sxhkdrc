@@ -15,14 +15,14 @@ super + space; shift + r
   pkill -USR1 -x sxhkd
 
 # close node
-super + space; shift + w
+super + space; shift + q
   bspc node -c
 
 ########################
 # CHORDS
 ########################
 
-# quit bspwm
+# cancel chord
 super + space; Escape
   noop
 
@@ -45,6 +45,10 @@ super + space; {h,j,k,l}
 # program menu
 super + space; m
   dmenu_run
+
+# launch password manager
+super + space; p
+  keepassxc
 
 # launch terminal
 super + space; t
