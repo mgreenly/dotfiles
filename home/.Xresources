@@ -1,1 +1,22 @@
 Xft.dpi: 192
+
+URxvt.font: xft:Monospace:size=12
+URxvt.scrollBar: false
+
+URxvt.background: black
+URxvt.foreground: grey
+URxvt.color12: rgb:5c/5c/ff
+
+/* change copy/paste */
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+/* URxvt.perl-ext-common: default,resize-font */
+URxvt.perl-ext-common: default,tabbed,matcher,resize-font,-tabbed
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Control-Meta-c: builtin-string:
+URxvt.keysym.Control-Meta-v: builtin-string:
+URxvt.keysym.C-minus:     resize-font:smaller
+URxvt.keysym.C-plus:      resize-font:bigger
+URxvt.keysym.C-equal:     resize-font:reset
+URxvt.keysym.C-question:  resize-font:show

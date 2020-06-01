@@ -30,9 +30,13 @@ super + space; Escape
 super + space; {1-9}
    bspc desktop -f {1-9}
 
-# launch terminal
+# launch browser
 super + space; b
   google-chrome
+
+# launch filemanager
+super + space; f
+  rxvt -e nnn
 
 # move the node in the given direction
 super + space; {h,j,k,l}
@@ -44,7 +48,7 @@ super + space; m
 
 # launch terminal
 super + space; t
-  gnome-terminal
+  rxvt
 
 ########################
 # KEYS
