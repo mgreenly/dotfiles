@@ -22,6 +22,9 @@ super + space; shift + q
 # CHORDS
 ########################
 
+super + space; Print
+  maim -f png ~/Pictures/screenshot-`date +"%Y-%m-%dT%H:%M:%S"`.png
+
 # cancel chord
 super + space; Escape
   noop
