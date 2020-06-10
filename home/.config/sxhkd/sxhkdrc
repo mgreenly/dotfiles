@@ -22,9 +22,6 @@ super + space; shift + q
 # CHORDS
 ########################
 
-super + space; Print
-  maim -f png ~/Pictures/screenshot-`date +"%Y-%m-%dT%H:%M:%S"`.png
-
 # cancel chord
 super + space; Escape
   noop
@@ -61,6 +58,13 @@ super + space; t
 # KEYS
 ########################
 
+Print
+  maim -f png ~/Pictures/screenshot-`date +"%Y-%m-%dT%H:%M:%S"`.png
+
+# swap with biggest
+super + Return
+  bspc node -s biggest.local
+
 # fullscreen
 super + f
    bspc node -t fullscreen
@@ -75,12 +79,21 @@ super + m
 
 # focus the next node in the current desktop
 super + n
-  bspc node -f next.local
+   bspc wm -h off; \
+   bspc node -f next.local; \
+   bspc wm -h on
 
 # focus the prev node in the current desktop
 super + p
-  bspc node -f prev.local
+  bspc wm -h off; \
+  bspc node -f prev.local; \
+  bspc wm -h on
 
-# tiled
+# rotate node + sibling 90 degrees
+super + r
+  bspc node @parent -R 90
+
+# switchg node to tiled mode
 super + t
    bspc node -t tiled
+
