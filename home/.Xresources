@@ -1,6 +1,6 @@
 Xft.dpi: 192
 
-URxvt.font: xft:Monospace:size=12
+URxvt.font: xft:Monospace:size=10
 URxvt.scrollBar: false
 
 URxvt.background: black
