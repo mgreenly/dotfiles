@@ -55,6 +55,16 @@ super + space; t
   rxvt
 
 ########################
+# SHIFT KEYS
+########################
+
+super + shift + j
+  bspc node -z top 0 -50
+
+super + shift + k
+  bspc node -z top 0 +50
+
+########################
 # KEYS
 ########################
 
