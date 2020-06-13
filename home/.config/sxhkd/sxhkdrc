@@ -58,11 +58,21 @@ super + space; t
 # SHIFT KEYS
 ########################
 
+
+# the resizing keys are intended to be used from the top or left window
+
+super + shift + h
+  bspc node -z right -50 0
+
 super + shift + j
-  bspc node -z top 0 -50
+  bspc node -z bottom 0 +50
 
 super + shift + k
-  bspc node -z top 0 +50
+  bspc node -z bottom 0 -50
+
+super + shift + l
+  bspc node -z right +50 0
+
 
 ########################
 # KEYS
