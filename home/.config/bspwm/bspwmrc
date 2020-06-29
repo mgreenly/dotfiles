@@ -4,6 +4,8 @@ bspc rule -r "*"
 
 compton --config $HOME/.config/compton.conf &
 sxhkd &
+pactl set-default-source alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo &
+pactl set-default-sink alsa_output.usb-Generic_USB_Audio-00.analog-stereo &
 xsetroot -cursor_name left_ptr &
 xinput --set-prop 12 'libinput Accel Speed' 1.0 &
 nitrogen --set-scaled ~/Pictures/wallpaper/black-3840x2160.png

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+set -e
+
+umount -q /media/zv1
+
+device=$(basename $(readlink /dev/disk/by-id/usb-Sony_DSC_C7F5600F1F60-0\:0))
+
+mount /dev/"$device"1 /media/zv1
+
+rsync --progress -av /media/zv1/PRIVATE/M4ROOT/CLIP/*.MP4 /home/$SUDO_USER/Videos/recordings/
+chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/Videos/recordings
+
+rm /media/zv1/PRIVATE/M4ROOT/CLIP/C0*.MP4
+rm /media/zv1/PRIVATE/M4ROOT/CLIP/C0*.XML
+
+

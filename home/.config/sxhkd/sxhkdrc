@@ -34,9 +34,17 @@ super + space; {1-9}
 super + space; b
   google-chrome
 
+# launch vim
+super + space; e
+  $HOME/.local/bin/st -e vim
+
 # launch filemanager
 super + space; f
-  rxvt -e nnn
+  bash -lc "$HOME/.local/bin/st nnn"
+
+
+
+#  bash -lc '/home/mgreenly/.local/bin/st nnn'
 
 # move the node in the given direction
 super + space; {h,j,k,l}
@@ -52,12 +60,16 @@ super + space; p
 
 # launch terminal
 super + space; t
-  rxvt
+  /home/mgreenly/.local/bin/st
+  # bash -lc "/home/mgreenly/.local/bin/st"
+
+# launch terminal
+super + space; v
+  blender -w
 
 ########################
 # SHIFT KEYS
 ########################
-
 
 # the resizing keys are intended to be used from the top or left window
 
@@ -117,3 +129,22 @@ super + r
 super + t
    bspc node -t tiled
 
+# fullscreen
+super + w
+   bspc node -t pseudo_tiled
+
+########################
+# SPECIAL
+########################
+
+# TODO - only pass ctrl + w through to certain applications
+#        https://github.com/baskerville/sxhkd/issues/123
+#        for example filter out of browsers but let vim
+#        have it for window manipulation
+#
+# ctrl + w
+#   noop
+#
+# TODO - a command that starts a terminal in the same
+#        directory as the curently focused window
+#        or home if there is no window
