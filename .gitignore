@@ -3,4 +3,4 @@
 *.rbc
 /tmp
 /.s3cfg
-/secrets
+/secrets*
