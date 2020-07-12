@@ -1,6 +1,2 @@
-*.swo
-*.swp
-*.rbc
 /tmp
-/.s3cfg
-/secrets*
+/secrets
