@@ -1,7 +1,9 @@
 set nocompatible              "" behave like vim not vi
-execute pathogen#infect()
 
-set t_Co=256                  " force 256 color mode
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+set termguicolors
 colorscheme mag256
 
 let mapleader=","
@@ -31,8 +33,8 @@ filetype on
 filetype indent on
 filetype plugin on
 
-"" disable F1 help
-nmap <F1> :echo<CR>
+"" disable F2 help
+nmap <F2> :echo<CR>
 imap <F1> <C-o>:echo<CR>
 
 
@@ -57,7 +59,8 @@ autocmd BufWritePre *.scm :call TrimWhiteSpace()
 autocmd BufWritePre *.go :call TrimWhiteSpace()
 
 """" Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
+"" nmap <C-S-P> :call <SID>SynStack()<CR>
+nmap <C-g> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
