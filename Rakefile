@@ -3,8 +3,6 @@ require 'fileutils'
 require 'pathname'
 require 'tmpdir'
 
-# this is a comment in 
-
 DOTFILEDIR = File.dirname(File.expand_path(__FILE__))
 
 TMPDIR = Dir.tmpdir
