@@ -4,7 +4,8 @@
 
 # quit
 super + space; shift + Escape
-  bspc quit
+  bspc quit; \
+  sudo poweroff
 
 # send node to the given desktop
 super + space; shift + {1-9}
