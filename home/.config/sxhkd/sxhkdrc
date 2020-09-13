@@ -43,7 +43,9 @@ super + space; e
 super + space; f
   bash -lc "$HOME/.local/bin/st nnn"
 
-
+# launch games
+super + space; g
+  steam
 
 #  bash -lc '/home/mgreenly/.local/bin/st nnn'
 
