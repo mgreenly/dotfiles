@@ -6,7 +6,7 @@
 mk_tmux_session() {
   if [ -z "$1" ]; then
     echo 'usage: startdev NAME'
-    exit 1
+    return 1
   fi
 
   if ! tmux has-session -t "$1" > /dev/null 2>&1; then
@@ -20,8 +20,7 @@ mk_tmux_session() {
     fi
   else
     echo "skipping: $1"
-  fi
-}
+  fi }
 
 
 
@@ -42,6 +41,20 @@ mk_tmux_session() {
 # effectively equivalant to project tabs in an IDE
 
 (cd $HOME/Projects/dotfiles; mk_tmux_session 'dotfiles' 'ls -lh')
+
+cat <<- USAGE
+
+  Some useful TMux key bindings.
+
+    'C-a L' previous session
+    'C-a s' to choose session from list
+
+  Some useful TMux commands.
+
+    $> tmux kill-session -t NAME
+    $> tmux kill-server
+
+USAGE
 
 # finally if I'm not already attached to a tmux session start in home
 [ -z "$TMUX" ] && tmux attach -t "!home"
