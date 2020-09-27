@@ -20,7 +20,10 @@ mk_tmux_session() {
     fi
   else
     echo "skipping: $1"
-  fi }
+  fi
+
+  sleep 0.25
+}
 
 
 
@@ -57,4 +60,7 @@ cat <<- USAGE
 USAGE
 
 # finally if I'm not already attached to a tmux session start in home
-[ -z "$TMUX" ] && tmux attach -t "!home"
+if [ -z "$TMUX" ]; then
+  sleep 1
+  tmux attach -t "!home"
+fi
