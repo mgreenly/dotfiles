@@ -44,6 +44,8 @@ mk_tmux_session() {
 # effectively equivalant to project tabs in an IDE
 
 (cd $HOME/Projects/dotfiles; mk_tmux_session 'dotfiles' 'ls -lh')
+(cd $HOME/Projects/haskell/samples; mk_tmux_session 'haskell' 'ls -lh')
+(cd $HOME/Projects/war; mk_tmux_session 'war' 'ls -lh')
 
 cat <<- USAGE
 

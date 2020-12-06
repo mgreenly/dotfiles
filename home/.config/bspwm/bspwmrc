@@ -1,20 +1,34 @@
 #! /bin/sh
 
+## DEFAUL SINK
+#set-default-sink alsa_output.usb-Generic_USB_Audio-00.analog-stereo
+#
+#
+## DEFAULT SOURCE
+#set-default-source alsa_input.usb-Audient_EVO4-00.multichannel-input
+
 bspc rule -r "*"
 
 compton --config $HOME/.config/compton.conf &
+numlockx &
 sxhkd &
 xsetroot -cursor_name left_ptr &
 xinput --set-prop 12 'libinput Accel Speed' 1.0 &
 nitrogen --set-scaled ~/Pictures/wallpaper/black-3840x2160.png
 
-
-#pactl set-default-source alsa_input.usb-Focusrite_Scarlett_Solo_USB-00.analog-stereo &
-#pactl set-default-sink alsa_output.usb-Generic_USB_Audio-00.analog-stereo &
-
 xmodmap ~/.xmodmaprc
 
+pacmd 'load-module module-remap-source source_name="EVO4_REAR_LEFT" source_properties="device.description=evo-rear-left" master="alsa_input.usb-Audient_EVO4-00.multichannel-input" master_channel_map=front-left channel_map=aux0 remix=no'
+pacmd 'load-module module-remap-source source_name="EVO4_REAR_RIGHT" source_properties="device.description=evo-rear-right" master="alsa_input.usb-Audient_EVO4-00.multichannel-input" master_channel_map=front-right channel_map=aux1 remix=no'
+pacmd 'load-module module-remap-source source_name="EVO4_FRONT_LEFT" source_properties="device.description=evo-front-left" master="alsa_input.usb-Audient_EVO4-00.multichannel-input" master_channel_map=rear-left channel_map=aux2 remix=no'
+pacmd 'load-module module-remap-source source_name="EVO4_FRONT_RIGHT" source_properties="device.description=evo-front-right" master="alsa_input.usb-Audient_EVO4-00.multichannel-input" master_channel_map=rear-right channel_map=aux3 remix=no'
+
+pacmd 'set-default-sink alsa_output.usb-Generic_USB_Audio-00.analog-stereo'
+#pacmd 'set-default-source alsa_input.usb-Audient_EVO4-00.multichannel-input'
+pacmd 'set-default-source EVO4_REAR_LEFT'
+
 $HOME/.config/polybar/launch.sh
+
 
 bspc monitor HDMI-A-0 -d 1 2 3 4 5 6 7 8 9
 

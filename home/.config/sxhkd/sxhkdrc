@@ -33,7 +33,7 @@ super + space; {1-9}
 
 # launch browser
 super + space; b
-  google-chrome
+  google-chrome --password-store=gnome
 
 # launch vim
 super + space; e
@@ -63,8 +63,8 @@ super + space; p
 
 # launch terminal
 super + space; t
-  /home/mgreenly/.local/bin/st
-  # bash -lc "/home/mgreenly/.local/bin/st"
+  bash -lc "/home/mgreenly/.local/bin/st"
+  #/home/mgreenly/.local/bin/st
 
 # launch terminal
 super + space; v
