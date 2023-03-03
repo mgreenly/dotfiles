@@ -22,7 +22,7 @@ namespace :secrets do
 
   desc "decrypt secrets.tar.gz.asc to secrets/"
   task :decrypt do
-    next if File.exists?("secrets") && File.mtime("secrets") > File.mtime("secrets.tar.gz.asc")
+    next if File.exist?("secrets") && File.mtime("secrets") > File.mtime("secrets.tar.gz.asc")
     exec %{rm -rf secrets && gpg --decrypt  secrets.tar.gz.asc | tar -xvzf - && touch secrets}
   end
 end
