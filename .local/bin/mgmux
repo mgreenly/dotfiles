@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# source /home/mgreenly/.nix-profile/etc/profile.d/nix.sh
+
+if [ ! -z $TMUX ]; then
+  echo "Cowardly refusing to run.  TMUX is already running."
+  exit 1
+fi
+
+# alias tf=terraform
+
+
+# export PATH
+
+echo 'adding scratch'
+tmux new-session -d -s Scratch -n SCRATCH
+tmux send-keys -t Scratch "clear; cd ~; ls -lha; echo" C-m
+
+echo 'adding notes'
+tmux new-session -d -s Notes -n NOTES
+tmux send-keys -t Notes "cd ; vim /home/mgreenly/Documents/notes.txt" C-m
+
+
+# echo 'adding redis'
+# tmux new-session -d -s Redis -n REDIS
+# tmux send-keys -t Redis "clear; cd ~/Projects/redis;redis-server --dbfilename dump.rb" C-m
+# 
+# echo 'adding static server'
+# tmux new-session -d -s StaticServer -n STATICSERVER
+# tmux send-keys -t StaticServer "clear; cd ~; ls -lha; echo" C-m
+# 
+# echo 'adding dotfiles'
+# tmux new-session -d -s DotFiles -n DOTFILES
+# tmux send-keys -t DotFiles "clear; cd ~/Projects/dotfiles; ls -lha; echo" C-m
+# 
+# echo 'adding mgtools'
+# tmux new-session -d -s MgTools -n MGTOOLS
+# tmux send-keys -t MgTools "clear; cd ~/Projects/mgtools; ls -lha; echo" C-m
+# 
+# echo 'adding worldbuilder'
+# tmux new-session -d -s WorldBuilder -n WORLDBUILDER
+# tmux send-keys -t WorldBuilder "clear; cd ~/Projects/worldbuilder; ls -lha; echo" C-m
+# 
+# echo 'adding metaspot.org'
+# tmux new-session -d -s MetaspotOrg -n METASPOTORG
+# tmux send-keys -t MetaspotOrg "clear; cd ~/Projects/metaspot.org; ls -lha; echo" C-m
+# 
+# # echo 'adding test.metaspot.org'
+# # tmux new-session -d -s MetaspotTest -n METASPOTTEST
+# # tmux send-keys -t MetaspotTest "clear; cd ~/Projects/test.metaspot.org; ls -lha; echo" C-m
+# 
+# echo 'adding champions.metaspot.org'
+# tmux new-session -d -s ChampionsMetaspotOrg -n CHAMPIONSMETASPOTORG
+# tmux send-keys -t ChampionsMetaspotOrg "clear; cd ~/Projects/champions.metaspot.org; ls -lha; echo" C-m
+# 
+# echo 'adding dnd.metaspot.org'
+# tmux new-session -d -s DndMetaspotOrg -n DNDMETASPOTORG
+# tmux send-keys -t DndMetaspotOrg "clear; cd ~/Projects/dnd.metaspot.org; ls -lha; echo" C-m
+# 
+# echo 'adding barrowmaze.metaspot.org'
+# tmux new-session -d -s BARROWMAZE -n BARROWMAZE
+# tmux send-keys -t BARROWMAZE "clear; cd ~/Projects/barrowmaze.metaspot.org; ls -lha; echo" C-m
+
+clear; ls -lha; echo
+
+tmux attach -t Scratch
+
