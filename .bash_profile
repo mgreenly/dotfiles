@@ -31,3 +31,5 @@ fi
 complete -C /usr/bin/terraform terraform
 
 eval "$(direnv hook bash)"
+
+export EDITOR=vim
