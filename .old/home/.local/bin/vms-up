@@ -1,3 +1,0 @@
-#!/bin/bash
-
-for i in $(virsh list --name --state-shutoff); do virsh start $i; done

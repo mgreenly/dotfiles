@@ -1,6 +1,0 @@
-MANPATH_MAP /home/mgreenly/.ghc/bin            /home/mgreenly/.ghc/share/man
-MANPATH_MAP /home/mgreenly/.opt/gambit/bin     /home/mgreenly/.opt/gambit/share/man
-MANPATH_MAP /home/mgreenly/.opt/chibi/bin      /home/mgreenly/.opt/chibi/share/man
-MANPATH_MAP /home/mgreenly/.opt/chicken/bin    /home/mgreenly/.opt/chicken/share/man
-MANPATH_MAP /home/mgreenly/.opt/node/bin       /home/mgreenly/.opt/node/share/man
-MANPATH_MAP /home/mgreenly/.opt/rust/bin       /home/mgreenly/.opt/rust/share/man
