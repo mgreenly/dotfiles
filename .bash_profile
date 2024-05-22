@@ -28,4 +28,6 @@ if [ -e "$HOME/.local/roc" ] ; then
   source "$HOME/.rvm/scripts/rvm"
 fi
 
+complete -C /usr/bin/terraform terraform
+
 eval "$(direnv hook bash)"
