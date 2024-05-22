@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'webrick'
+
+WEBrick::HTTPServer.new(
+  :BindAddress => "0.0.0.0",
+  :Port => 8080,
+  :DocumentRoot => ARGV[0]
+).start
