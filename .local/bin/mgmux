@@ -16,13 +16,14 @@ echo 'adding notes'
 tmux new-session -d -s Notes -n NOTES
 tmux send-keys -t Notes "cd ; vim /home/mgreenly/Documents/notes.txt" C-m
 
+echo 'adding scratch terminal'
+tmux new-session -d -s Scratch -n SCRATCH
+tmux send-keys -t Scratch "clear; cd ~; ls -lha; echo" C-m
+
 echo 'adding http terminal'
 tmux new-session -d -s Http -n HTTP
 tmux send-keys -t Http "clear; cd ~; ls -lha; echo" C-m
 
-echo 'adding scratch terminal'
-tmux new-session -d -s Scratch -n SCRATCH
-tmux send-keys -t Scratch "clear; cd ~; ls -lha; echo" C-m
 
 
 
