@@ -28,10 +28,15 @@ if [ -e "$HOME/.local/roc" ] ; then
   source "$HOME/.rvm/scripts/rvm"
 fi
 
+if [ -e "$HOME/.local/nvim" ] ; then
+  alias vim=nvim
+  export PATH="$PATH:$HOME/.local/nvim/bin"
+fi
+
 complete -C /usr/bin/terraform terraform
 
 eval "$(direnv hook bash)"
 
-export EDITOR=vim
-
 alias tf=terraform
+
+export EDITOR=vim
