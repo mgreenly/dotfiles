@@ -94,3 +94,5 @@ command! -complete=file -nargs=* ReadStackBuild call s:RunShellCommand('stack bu
 
 "" show/hide nerdtree
 map <leader>n :NERDTreeToggle<CR>
+
+set directory=~/.tmp/vim/swap//
