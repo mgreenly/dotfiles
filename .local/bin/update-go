@@ -1,0 +1,21 @@
+#!/bin/sh
+set -ex
+
+#
+# quick hack to take a golang download url and install it to $HOME/.local/go
+#
+
+url=$1
+out=$(basename "${url}")
+
+if [ ! -e $HOME/Downloads/$out ]; then
+  curl -L -o $HOME/Downloads/$out $url
+fi
+
+tmpdir=$(mktemp -d)
+mkdir -p $tmpdir
+tar -C $tmpdir/ -xf $HOME/Downloads/$out
+cp -R $tmpdir/go $HOME/.local/${out%.tar.gz}
+rm -rf $tmpdir
+ln -sfn $HOME/.local/${out%.tar.gz} $HOME/.local/go
+ls -Clha $HOME/.local
