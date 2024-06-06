@@ -24,8 +24,17 @@ echo 'adding http terminal'
 tmux new-session -d -s Http -n HTTP
 tmux send-keys -t Http "clear; cd ~; ls -lha; echo" C-m
 
+echo 'adding repo/clang terminal'
+tmux new-session -d -s clang -n clang
+tmux send-keys -t clang "clear; cd ~/Documents/repos/clang; ls -lha; echo" C-m
 
+echo 'adding repo/dnd.metaspot.org terminal'
+tmux new-session -d -s dndmetaspot -n dndmetaspot
+tmux send-keys -t dndmetaspot "clear; cd ~/Documents/repos/dnd.metaspot.org; ls -lha; echo" C-m
 
+echo 'adding repo/dndarena terminal'
+tmux new-session -d -s dndarena -n dndarena
+tmux send-keys -t dndarena "clear; cd ~/Documents/repos/dndarena; ls -lha; echo" C-m
 
 # echo 'adding redis'
 # tmux new-session -d -s Redis -n REDIS
