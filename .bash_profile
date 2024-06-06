@@ -29,7 +29,7 @@ if [ -e "$HOME/.local/roc" ] ; then
 fi
 
 if [ -e "$HOME/.local/nvim" ] ; then
-  alias vim=nvim
+  # alias vim=nvim
   export PATH="$PATH:$HOME/.local/nvim/bin"
 fi
 
@@ -40,3 +40,4 @@ eval "$(direnv hook bash)"
 alias tf=terraform
 
 export EDITOR=vim
+export CC=gcc
