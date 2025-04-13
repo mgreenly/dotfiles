@@ -113,17 +113,17 @@ if ! shopt -oq posix; then
 fi
 
 
-if [ -e "$HOME/.local/nvim" ] ; then
-    PATH="$HOME/.local/nvim/bin:$PATH"
-fi
+# if [ -e "$HOME/.local/nvim" ] ; then
+#     PATH="$HOME/.local/nvim/bin:$PATH"
+# fi
 
 if [ -e "$HOME/.local/zig" ] ; then
     PATH="$HOME/.local/zig:$PATH"
 fi
 
-alias vim=$HOME/.local/nvim/bin/nvim
+alias vim=nvim
 
-export EDITOR=$HOME/.local/nvim/bin/nvim
+export EDITOR=nvim
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 # export PATH="$PATH:$HOME/.rvm/bin"
@@ -147,3 +147,5 @@ export LIBVIRT_DEFAULT_URI='qemu:///system'
 . "$HOME/.cargo/env"
 
 eval "$(direnv hook bash)"
+
+eval "$(/home/mgreenly/.nix-profile/bin/fzf --bash)"
