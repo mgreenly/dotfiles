@@ -1,44 +1,34 @@
-set nocompatible                 " behave like vim not vi
-set directory=~/.tmp/vim/swap/   " set swapfile directory
-
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
-" Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 call plug#end()
 
-"" setup catppuccin mocha as the color scheme
-" colorscheme catppuccin-mocha
 colorscheme moonfly
 
-"" what is this?
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-
-let mapleader=","
-
-set encoding=utf8             " show utf8 encoding
-set fileencoding=utf8         " save files with utf8 encoding
-set tabstop=2                 " n columns per tab
-set shiftwidth=2              " n columns to indent with << and >>
-set expandtab                 " insert spaces for tabs
-set nowrap                    " don't wrap long lines
-set hidden                    " don't force save before opening buffer
-set exrc                      " enable per-directory .vimrc files
-set laststatus=2              " show status line
-set number                    " show linenumber
-set numberwidth=5             " set the number width
-set relativenumber            " use relative instead of absolute line numbers
+set nocompatible                 " behave like vim not vi
+set directory=~/.tmp/vim/swap/   " set swapfile directory
+set termguicolors
+set encoding=utf8                " show utf8 encoding
+set fileencoding=utf8            " save files with utf8 encoding
+set tabstop=2                    " n columns per tab
+set shiftwidth=2                 " n columns to indent with << and >>
+set expandtab                    " insert spaces for tabs
+set nowrap                       " don't wrap long lines
+set hidden                       " don't force save before opening buffer
+set exrc                         " enable per-directory .vimrc files
+set laststatus=2                 " show status line
+set number                       " show linenumber
+set numberwidth=5                " set the number width
+set relativenumber               " use relative instead of absolute line numbers
 set list
-set listchars=tab:··,trail:⎵  " show tab and trailing whitespace
-set colorcolumn=120           " set the right margin marker
-set modeline                  " enable editor specific commands
-
+set listchars=tab:··,trail:⎵     " show tab and trailing whitespace
+set colorcolumn=120              " set the right margin marker
+set modeline                     " enable editor specific commands
 set ttyfast
 set lazyredraw
+let mapleader=","
 
 syntax on
 filetype on
@@ -67,5 +57,4 @@ autocmd BufWritePre *.hs :call TrimWhiteSpace()
 autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
 autocmd BufWritePre *.go :call TrimWhiteSpace()
-
 
