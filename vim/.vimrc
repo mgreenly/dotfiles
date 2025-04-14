@@ -9,7 +9,7 @@ colorscheme moonfly
 
 set nocompatible                 " behave like vim not vi
 set directory=~/.tmp/vim/swap/   " set swapfile directory
-set termguicolors
+set termguicolors                " use the gui color values
 set encoding=utf8                " show utf8 encoding
 set fileencoding=utf8            " save files with utf8 encoding
 set tabstop=2                    " n columns per tab
@@ -22,12 +22,12 @@ set laststatus=2                 " show status line
 set number                       " show linenumber
 set numberwidth=5                " set the number width
 set relativenumber               " use relative instead of absolute line numbers
-set list
+set list                         " show whitespace
 set listchars=tab:··,trail:⎵     " show tab and trailing whitespace
 set colorcolumn=120              " set the right margin marker
 set modeline                     " enable editor specific commands
-set ttyfast
-set lazyredraw
+set lazyredraw                   " don't redraw while executing macros
+
 let mapleader=","
 
 syntax on
