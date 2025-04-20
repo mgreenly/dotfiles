@@ -20,6 +20,10 @@ echo 'adding scratch terminal'
 tmux new-session -d -s Scratch -n SCRATCH
 tmux send-keys -t Scratch "clear; cd $HOME/Projects; ls -lha; echo" C-m
 
+echo 'adding dotfiles'
+tmux new-session -d -s 'dotfiles' -n 'dotfiles'
+tmux send-keys -t 'dotfiles' "clear; cd $HOME/Projects/dotfiles; ls -lha; echo" C-m
+
 echo 'adding chargen/c'
 tmux new-session -d -s 'chargen/c' -n 'chargen/c'
 tmux send-keys -t 'chargen/c' "clear; cd $HOME/Projects/chargen/c; ls -lha; echo" C-m
