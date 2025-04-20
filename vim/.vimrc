@@ -29,6 +29,10 @@ set modeline                     " enable editor specific commands
 set lazyredraw                   " don't redraw while executing macros
 
 let mapleader=","
+noremap <leader>b :! clear & make build<CR>
+noremap <leader>t :! clear & make test<CR>
+noremap <leader>r :! clear & make run<CR>
+noremap <leader>c :! clear & make clean<CR>
 
 syntax on
 filetype on
@@ -36,8 +40,9 @@ filetype indent on
 filetype plugin on
 
 "" disable F2 help
-nmap <F2> :echo<CR>
+nmap <F1> :echo<CR>
 imap <F1> <C-o>:echo<CR>
+nmap <F2> :echo<CR>
 
 "" disable 'save and quit' because it's to close to 'suspend' (<C-z>)
 map <S-z><S-z> <Nop>
@@ -51,6 +56,7 @@ function! TrimWhiteSpace()
   execute '%s/\s\+$//e'
 endfunction
 noremap <C-S> :call TrimWhiteSpace()<CR>
+
 
 """" automatically delete trailing whitespace on save for these filetypes
 autocmd BufWritePre *.hs :call TrimWhiteSpace()
