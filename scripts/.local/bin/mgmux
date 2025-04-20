@@ -20,62 +20,21 @@ echo 'adding scratch terminal'
 tmux new-session -d -s Scratch -n SCRATCH
 tmux send-keys -t Scratch "clear; cd $HOME/Projects; ls -lha; echo" C-m
 
+echo 'adding chargen/c'
+tmux new-session -d -s 'chargen/c' -n 'chargen/c'
+tmux send-keys -t 'chargen/c' "clear; cd $HOME/Projects/chargen/c; ls -lha; echo" C-m
 
-# echo 'adding http terminal'
-# tmux new-session -d -s Http -n HTTP
-# tmux send-keys -t Http "clear; cd ~; ls -lha; echo" C-m
+echo 'adding chargen/go'
+tmux new-session -d -s 'chargen/go' -n 'chargen/go'
+tmux send-keys -t 'chargen/go' "clear; cd $HOME/Projects/chargen/go; ls -lha; echo" C-m
 
-# echo 'adding repo/clang terminal'
-# tmux new-session -d -s clang -n clang
-# tmux send-keys -t clang "clear; cd ~/Documents/repos/clang; ls -lha; echo" C-m
+echo 'adding chargen/rust'
+tmux new-session -d -s 'chargen/rust' -n 'chargen/rust'
+tmux send-keys -t 'chargen/rust' "clear; cd $HOME/Projects/chargen/rust; ls -lha; echo" C-m
 
-# echo 'adding repo/dnd.metaspot.org terminal'
-# tmux new-session -d -s dndmetaspot -n dndmetaspot
-# tmux send-keys -t dndmetaspot "clear; cd ~/Documents/repos/dnd.metaspot.org; ls -lha; echo" C-m
-
-# echo 'adding repo/dndarena terminal'
-# tmux new-session -d -s dndarena -n dndarena
-# tmux send-keys -t dndarena "clear; cd ~/Documents/repos/dndarena; ls -lha; echo" C-m
-
-# echo 'adding redis'
-# tmux new-session -d -s Redis -n REDIS
-# tmux send-keys -t Redis "clear; cd ~/Projects/redis;redis-server --dbfilename dump.rb" C-m
-# 
-# echo 'adding static server'
-# tmux new-session -d -s StaticServer -n STATICSERVER
-# tmux send-keys -t StaticServer "clear; cd ~; ls -lha; echo" C-m
-# 
-# echo 'adding dotfiles'
-# tmux new-session -d -s DotFiles -n DOTFILES
-# tmux send-keys -t DotFiles "clear; cd ~/Projects/dotfiles; ls -lha; echo" C-m
-# 
-# echo 'adding mgtools'
-# tmux new-session -d -s MgTools -n MGTOOLS
-# tmux send-keys -t MgTools "clear; cd ~/Projects/mgtools; ls -lha; echo" C-m
-# 
-# echo 'adding worldbuilder'
-# tmux new-session -d -s WorldBuilder -n WORLDBUILDER
-# tmux send-keys -t WorldBuilder "clear; cd ~/Projects/worldbuilder; ls -lha; echo" C-m
-# 
-# echo 'adding metaspot.org'
-# tmux new-session -d -s MetaspotOrg -n METASPOTORG
-# tmux send-keys -t MetaspotOrg "clear; cd ~/Projects/metaspot.org; ls -lha; echo" C-m
-# 
-# # echo 'adding test.metaspot.org'
-# # tmux new-session -d -s MetaspotTest -n METASPOTTEST
-# # tmux send-keys -t MetaspotTest "clear; cd ~/Projects/test.metaspot.org; ls -lha; echo" C-m
-# 
-# echo 'adding champions.metaspot.org'
-# tmux new-session -d -s ChampionsMetaspotOrg -n CHAMPIONSMETASPOTORG
-# tmux send-keys -t ChampionsMetaspotOrg "clear; cd ~/Projects/champions.metaspot.org; ls -lha; echo" C-m
-# 
-# echo 'adding dnd.metaspot.org'
-# tmux new-session -d -s DndMetaspotOrg -n DNDMETASPOTORG
-# tmux send-keys -t DndMetaspotOrg "clear; cd ~/Projects/dnd.metaspot.org; ls -lha; echo" C-m
-# 
-# echo 'adding barrowmaze.metaspot.org'
-# tmux new-session -d -s BARROWMAZE -n BARROWMAZE
-# tmux send-keys -t BARROWMAZE "clear; cd ~/Projects/barrowmaze.metaspot.org; ls -lha; echo" C-m
+echo 'adding chargen/zig'
+tmux new-session -d -s 'chargen/zig' -n 'chargen/zig'
+tmux send-keys -t 'chargen/zig' "clear; cd $HOME/Projects/chargen/zig; ls -lha; echo" C-m
 
 clear; ls -lha; echo
 
