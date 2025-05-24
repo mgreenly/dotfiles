@@ -1,4 +1,7 @@
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
 clipboard-paste-protection=false
 gtk-titlebar=false
 maximize=true
-font-size = 12
+font-size = 14
