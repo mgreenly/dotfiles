@@ -29,7 +29,8 @@ set modeline                     " enable editor specific commands
 set lazyredraw                   " don't redraw while executing macros
 
 let mapleader=","
-noremap <leader>b :! clear & make build<CR>
+noremap <leader>b :! clear & make all<CR>
+noremap <leader>d :! clear & make debug<CR>
 noremap <leader>t :! clear & make test<CR>
 noremap <leader>r :! clear & make run<CR>
 noremap <leader>c :! clear & make clean<CR>
