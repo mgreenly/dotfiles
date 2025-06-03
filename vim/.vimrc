@@ -5,6 +5,7 @@ Plug 'tpope/vim-commentary'
 Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 call plug#end()
 
+
 colorscheme moonfly
 
 set nocompatible                 " behave like vim not vi
@@ -29,7 +30,8 @@ set modeline                     " enable editor specific commands
 set lazyredraw                   " don't redraw while executing macros
 
 let mapleader=","
-noremap <leader>b :! clear & make all<CR>
+noremap <leader>a :! clear & make all<CR>
+noremap <leader>b :! clear & make build<CR>
 noremap <leader>d :! clear & make debug<CR>
 noremap <leader>t :! clear & make test<CR>
 noremap <leader>r :! clear & make run<CR>
@@ -58,10 +60,8 @@ function! TrimWhiteSpace()
 endfunction
 noremap <C-S> :call TrimWhiteSpace()<CR>
 
-
 """" automatically delete trailing whitespace on save for these filetypes
 autocmd BufWritePre *.hs :call TrimWhiteSpace()
 autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
 autocmd BufWritePre *.go :call TrimWhiteSpace()
-
