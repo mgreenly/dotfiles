@@ -36,6 +36,7 @@ noremap <leader>d :! clear & make debug<CR>
 noremap <leader>t :! clear & make test<CR>
 noremap <leader>r :! clear & make run<CR>
 noremap <leader>c :! clear & make clean<CR>
+noremap <leader>p :Copilot enable<CR>
 
 syntax on
 filetype on
@@ -65,3 +66,5 @@ autocmd BufWritePre *.hs :call TrimWhiteSpace()
 autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
 autocmd BufWritePre *.go :call TrimWhiteSpace()
+
+autocmd VimEnter * Copilot disable
