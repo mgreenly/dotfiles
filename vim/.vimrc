@@ -1,12 +1,16 @@
+" if has('termguicolors')
+"   set termguicolors
+" endif
+
 call plug#begin()
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
+Plug 'mcchrish/nnn.vim'
 call plug#end()
 
-
-colorscheme moonfly
+colorscheme challenger_deep
 
 set nocompatible                 " behave like vim not vi
 set directory=~/.tmp/vim/swap/   " set swapfile directory
@@ -66,5 +70,7 @@ autocmd BufWritePre *.hs :call TrimWhiteSpace()
 autocmd BufWritePre *.rb :call TrimWhiteSpace()
 autocmd BufWritePre *.scm :call TrimWhiteSpace()
 autocmd BufWritePre *.go :call TrimWhiteSpace()
+autocmd BufWritePre *.h :call TrimWhiteSpace()
+autocmd BufWritePre *.c :call TrimWhiteSpace()
 
 autocmd VimEnter * Copilot disable
