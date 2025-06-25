@@ -4,4 +4,5 @@ font-feature = -liga
 clipboard-paste-protection=false
 gtk-titlebar=false
 maximize=true
-font-size = 14
+font-size = 12
+keybind = shift+enter=text:\n
